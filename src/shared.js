@@ -1,9 +1,10 @@
-import { number, block, circleCostume } from './blocks.js';
+import { number, block, svgCostume, circleCostume } from './blocks.js';
 
 export const CODE_LIST = ['code', 'code-list'];
 export const GUESS_LIST = ['guess', 'guess-list'];
 export const ROW_VARIABLE = ['row', 'row-variable'];
 export const NEXT_ROW_BROADCAST = ['next row', 'next-row-broadcast'];
+export const UNDO_BROADCAST = ['undo', 'undo-broadcast'];
 
 export function guessLength() {
   return block('data_lengthoflist', { fields: { LIST: GUESS_LIST } });
@@ -15,6 +16,11 @@ export function row() {
 
 export function rowY() {
   return block('operator_add', { inputs: { NUM1: number(-192), NUM2: number(block('operator_multiply', { inputs: { NUM1: number(32), NUM2: number(row()) } })) } });
+}
+
+export function buttonCostume(label) {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="26"><rect width="64" height="26" rx="6" fill="#5f5e5a"/><text x="32" y="18" font-family="Sans Serif" font-size="14" fill="#ffffff" text-anchor="middle">${label}</text></svg>`;
+  return svgCostume('button', svg, 32, 13);
 }
 
 export function pegCostumes() {

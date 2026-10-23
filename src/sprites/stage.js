@@ -1,11 +1,12 @@
 import { text, block, buildBlocks, svgCostume } from '../blocks.js';
-import { CODE_LIST, GUESS_LIST, ROW_VARIABLE, NEXT_ROW_BROADCAST } from '../shared.js';
+import { CODE_LIST, GUESS_LIST, ROW_VARIABLE, NEXT_ROW_BROADCAST, UNDO_BROADCAST } from '../shared.js';
 
 export function stageTarget() {
   return {
     isStage: true, name: 'Stage', comments: {},
     broadcasts: {
-      [NEXT_ROW_BROADCAST[1]]: NEXT_ROW_BROADCAST[0]
+      [NEXT_ROW_BROADCAST[1]]: NEXT_ROW_BROADCAST[0],
+      [UNDO_BROADCAST[1]]: UNDO_BROADCAST[0]
     },
     variables: {
       [ROW_VARIABLE[1]]: [ROW_VARIABLE[0], 1]

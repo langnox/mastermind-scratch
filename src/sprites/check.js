@@ -1,5 +1,5 @@
-import { number, text, message, condition, block, buildBlocks, svgCostume } from '../blocks.js';
-import { GUESS_LIST, ROW_VARIABLE, NEXT_ROW_BROADCAST, guessLength } from '../shared.js';
+import { number, text, message, condition, block, buildBlocks } from '../blocks.js';
+import { GUESS_LIST, ROW_VARIABLE, NEXT_ROW_BROADCAST, guessLength, buttonCostume } from '../shared.js';
 
 export function checkSprite() {
   return {
@@ -36,7 +36,7 @@ export function checkSprite() {
     ),
     currentCostume: 0,
     costumes: [
-      svgCostume('button', '<svg xmlns="http://www.w3.org/2000/svg" width="64" height="26"><rect width="64" height="26" rx="6" fill="#5f5e5a"/><text x="32" y="18" font-family="Sans Serif" font-size="14" fill="#ffffff" text-anchor="middle">Check</text></svg>', 32, 13)
+      buttonCostume('Check')
     ],
     sounds: [], volume: 100, layerOrder: 6, visible: false, x: 0, y: 0, size: 100, direction: 90, draggable: false, rotationStyle: 'all around'
   };
