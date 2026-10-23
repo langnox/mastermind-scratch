@@ -1,5 +1,5 @@
 import { number, text, variable, message, condition, block, buildScripts } from '../blocks.js';
-import { NEW_GAME_BROADCAST, CONFIRM_NEW_GAME_BROADCAST, CANCEL_NEW_GAME_BROADCAST, PLAYING_VARIABLE, guessLength, row, pressedAtVariable, markPressed, sizeCue, buttonCostume } from '../shared.js';
+import { NEW_GAME_BROADCAST, CONFIRM_NEW_GAME_BROADCAST, CANCEL_NEW_GAME_BROADCAST, PLAYING_VARIABLE, guessLength, row, pressedAtVariable, markPressed, sizeCue, buttonCostume, forgetPressed } from '../shared.js';
 
 export function newGameSprite() {
   const NEW_GAME_PRESSED_AT = pressedAtVariable('new-game');
@@ -12,20 +12,21 @@ export function newGameSprite() {
     ...buildScripts(
       [
         block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST }, y: 0 }),
+        forgetPressed(NEW_GAME_PRESSED_AT),
         block('motion_gotoxy', { inputs: { X: number(165), Y: number(-36) } }),
         block('looks_show'),
         block('control_forever', { substack: [sizeCue(NEW_GAME_PRESSED_AT)] })
       ],
       [
-        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: CONFIRM_NEW_GAME_BROADCAST }, y: 1086 }),
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: CONFIRM_NEW_GAME_BROADCAST }, y: 1136 }),
         block('looks_hide')
       ],
       [
-        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: CANCEL_NEW_GAME_BROADCAST }, y: 1257 }),
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: CANCEL_NEW_GAME_BROADCAST }, y: 1307 }),
         block('looks_show')
       ],
       [
-        block('event_whenthisspriteclicked', { comment: 'Asks first only if a game is in progress with something to lose. Otherwise it starts a new game straight away.', y: 683, commentX: 911 }),
+        block('event_whenthisspriteclicked', { comment: 'Asks first only if a game is in progress with something to lose. Otherwise it starts a new game straight away.', y: 733, commentX: 911 }),
         markPressed(NEW_GAME_PRESSED_AT),
         block('control_if_else', {
           inputs: {

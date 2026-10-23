@@ -1,5 +1,5 @@
 import { number, text, message, condition, defineProcedure, callProcedure, whenKeyPressed, block, buildScripts } from '../blocks.js';
-import { GUESS_LIST, UNDO_BROADCAST, NEW_GAME_BROADCAST, PLACED_VARIABLE, guessLength, notConfirming, pressedAtVariable, markPressed, sizeCue, buttonCostume } from '../shared.js';
+import { GUESS_LIST, UNDO_BROADCAST, NEW_GAME_BROADCAST, PLACED_VARIABLE, guessLength, notConfirming, pressedAtVariable, markPressed, sizeCue, buttonCostume, forgetPressed } from '../shared.js';
 
 export function undoSprite() {
   const UNDO_PRESSED_AT = pressedAtVariable('undo');
@@ -12,6 +12,7 @@ export function undoSprite() {
     ...buildScripts(
       [
         block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST }, y: 0 }),
+        forgetPressed(UNDO_PRESSED_AT),
         block('motion_gotoxy', { inputs: { X: number(160), Y: number(-128) } }),
         block('control_forever', {
           substack: [
@@ -36,15 +37,15 @@ export function undoSprite() {
         })
       ],
       [
-        block('event_whenthisspriteclicked', { y: 861 }),
+        block('event_whenthisspriteclicked', { y: 911 }),
         callProcedure('undo peg')
       ],
       [
-        whenKeyPressed('left arrow', { y: 1456 }),
+        whenKeyPressed('left arrow', { y: 1506 }),
         callProcedure('undo peg')
       ],
       [
-        defineProcedure('undo peg', { comment: 'Checks there is a peg first, because the left arrow works even while the button is hidden.', y: 1030, commentX: 735 }),
+        defineProcedure('undo peg', { comment: 'Checks there is a peg first, because the left arrow works even while the button is hidden.', y: 1080, commentX: 735 }),
         block('control_if', {
           inputs: {
             CONDITION: condition(block('operator_and', {

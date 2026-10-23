@@ -1,5 +1,5 @@
 import { number, message, block, buildScripts } from '../blocks.js';
-import { NEW_GAME_BROADCAST, CONFIRM_NEW_GAME_BROADCAST, CANCEL_NEW_GAME_BROADCAST, pressedAtVariable, markPressed, sizeCue, buttonCostume } from '../shared.js';
+import { NEW_GAME_BROADCAST, CONFIRM_NEW_GAME_BROADCAST, CANCEL_NEW_GAME_BROADCAST, pressedAtVariable, markPressed, sizeCue, buttonCostume, forgetPressed } from '../shared.js';
 
 export function noSprite() {
   const NO_PRESSED_AT = pressedAtVariable('no');
@@ -12,20 +12,21 @@ export function noSprite() {
     ...buildScripts(
       [
         block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST }, y: 0 }),
+        forgetPressed(NO_PRESSED_AT),
         block('looks_hide'),
         block('motion_gotoxy', { inputs: { X: number(191), Y: number(-68) } }),
         block('control_forever', { substack: [sizeCue(NO_PRESSED_AT)] })
       ],
       [
-        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: CONFIRM_NEW_GAME_BROADCAST }, y: 900 }),
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: CONFIRM_NEW_GAME_BROADCAST }, y: 950 }),
         block('looks_show')
       ],
       [
-        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: CANCEL_NEW_GAME_BROADCAST }, y: 1071 }),
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: CANCEL_NEW_GAME_BROADCAST }, y: 1121 }),
         block('looks_hide')
       ],
       [
-        block('event_whenthisspriteclicked', { y: 683 }),
+        block('event_whenthisspriteclicked', { y: 733 }),
         markPressed(NO_PRESSED_AT),
         block('event_broadcast', { inputs: { BROADCAST_INPUT: message(CANCEL_NEW_GAME_BROADCAST) } })
       ]

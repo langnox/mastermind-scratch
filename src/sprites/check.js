@@ -1,5 +1,5 @@
 import { number, text, variable, message, condition, defineProcedure, callProcedure, whenKeyPressed, block, buildScripts } from '../blocks.js';
-import { GUESS_LIST, ROW_VARIABLE, NEXT_ROW_BROADCAST, NEW_GAME_BROADCAST, SCORE_BROADCAST, WIN_BROADCAST, LOSE_BROADCAST, PLAYING_VARIABLE, PLACED_VARIABLE, BLACK_VARIABLE, guessLength, row, notConfirming, pressedAtVariable, markPressed, sizeCue, buttonCostume } from '../shared.js';
+import { GUESS_LIST, ROW_VARIABLE, NEXT_ROW_BROADCAST, NEW_GAME_BROADCAST, SCORE_BROADCAST, WIN_BROADCAST, LOSE_BROADCAST, PLAYING_VARIABLE, PLACED_VARIABLE, BLACK_VARIABLE, guessLength, row, notConfirming, pressedAtVariable, markPressed, sizeCue, buttonCostume, forgetPressed } from '../shared.js';
 
 export function checkSprite() {
   const CHECK_PRESSED_AT = pressedAtVariable('check');
@@ -12,6 +12,7 @@ export function checkSprite() {
     ...buildScripts(
       [
         block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST }, comment: 'Shows Check only while a full guess is placed and no confirmation is open, and runs the hover and press cue.', y: 0, commentX: 735 }),
+        forgetPressed(CHECK_PRESSED_AT),
         block('motion_gotoxy', { inputs: { X: number(160), Y: number(-160) } }),
         block('control_forever', {
           substack: [
@@ -36,15 +37,15 @@ export function checkSprite() {
         })
       ],
       [
-        block('event_whenthisspriteclicked', { y: 861 }),
+        block('event_whenthisspriteclicked', { y: 911 }),
         callProcedure('submit guess', { warp: false })
       ],
       [
-        whenKeyPressed('enter', { y: 1990 }),
+        whenKeyPressed('enter', { y: 2040 }),
         callProcedure('submit guess', { warp: false })
       ],
       [
-        defineProcedure('submit guess', { warp: false, comment: 'Waits for scoring, then either ends the game (four black pegs, or the tenth row) or moves to the next row. Runs with screen refresh, because a custom block that waits would stall otherwise.', y: 1030, commentX: 735 }),
+        defineProcedure('submit guess', { warp: false, comment: 'Waits for scoring, then either ends the game (four black pegs, or the tenth row) or moves to the next row. Runs with screen refresh, because a custom block that waits would stall otherwise.', y: 1080, commentX: 735 }),
         block('control_if', {
           inputs: {
             CONDITION: condition(block('operator_and', {

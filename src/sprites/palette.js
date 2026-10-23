@@ -1,5 +1,5 @@
 import { number, text, variable, condition, costume, cloneOf, defineProcedure, callProcedure, whenKeyPressed, block, buildScripts, svgCostume } from '../blocks.js';
-import { GUESS_LIST, NEW_GAME_BROADCAST, CONFIRM_NEW_GAME_BROADCAST, CANCEL_NEW_GAME_BROADCAST, PLAYING_VARIABLE, guessLength, notConfirming, pressedAtVariable, markPressed, sizeCue, PEG_COLOURS, isCloneVariable, deleteIfClone } from '../shared.js';
+import { GUESS_LIST, NEW_GAME_BROADCAST, CONFIRM_NEW_GAME_BROADCAST, CANCEL_NEW_GAME_BROADCAST, PLAYING_VARIABLE, guessLength, notConfirming, pressedAtVariable, markPressed, sizeCue, PEG_COLOURS, isCloneVariable, deleteIfClone, forgetPressed } from '../shared.js';
 
 export function paletteSprite() {
   const PALETTE_IS_CLONE_VARIABLE = isCloneVariable('palette');
@@ -22,11 +22,12 @@ export function paletteSprite() {
       [
         block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST }, y: 0 }),
         deleteIfClone(PALETTE_IS_CLONE_VARIABLE),
+        forgetPressed(PALETTE_PRESSED_AT),
         block('looks_hide'),
         callProcedure('show palette')
       ],
       [
-        defineProcedure('show palette', { y: 355 }),
+        defineProcedure('show palette', { y: 405 }),
         block('motion_gotoxy', { inputs: { X: number(-150), Y: number(80) } }),
         block('looks_switchcostumeto', { inputs: { COSTUME: costume('red') } }),
         block('control_repeat', {
@@ -39,17 +40,17 @@ export function paletteSprite() {
         })
       ],
       [
-        block('control_start_as_clone', { comment: 'Grows while hovered and shrinks briefly after use. It’s timed from ‘pressed at’, so fast repeated keys are never ignored.', y: 807, commentX: 975 }),
+        block('control_start_as_clone', { comment: 'Grows while hovered and shrinks briefly after use. It’s timed from ‘pressed at’, so fast repeated keys are never ignored.', y: 857, commentX: 975 }),
         block('data_setvariableto', { inputs: { VALUE: text(1) }, fields: { VARIABLE: PALETTE_IS_CLONE_VARIABLE } }),
         block('looks_show'),
         block('control_forever', { substack: [sizeCue(PALETTE_PRESSED_AT)] })
       ],
       [
-        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: CONFIRM_NEW_GAME_BROADCAST }, y: 3655 }),
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: CONFIRM_NEW_GAME_BROADCAST }, y: 3705 }),
         block('looks_hide')
       ],
       [
-        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: CANCEL_NEW_GAME_BROADCAST }, comment: 'Only the clones come back after ‘No’. The original sprite stays hidden.', y: 3826, commentX: 975 }),
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: CANCEL_NEW_GAME_BROADCAST }, comment: 'Only the clones come back after ‘No’. The original sprite stays hidden.', y: 3876, commentX: 975 }),
         block('control_if', {
           inputs: { CONDITION: condition(block('operator_equals', { inputs: { OPERAND1: text(variable(PALETTE_IS_CLONE_VARIABLE)), OPERAND2: text(1) } })) },
           substack: [
@@ -58,11 +59,11 @@ export function paletteSprite() {
         })
       ],
       [
-        block('event_whenthisspriteclicked', { y: 1490 }),
+        block('event_whenthisspriteclicked', { y: 1540 }),
         callProcedure('place peg')
       ],
       ...PEG_COLOURS.map(({ name }, index) => [
-        whenKeyPressed(name[0], { comment: index === 0 ? 'Every palette clone hears every key. Only the clone whose costume matches the key’s colour places a peg, and the hidden original is skipped through ‘is clone’.' : undefined, y: 2041 + index * 269, commentX: index === 0 ? 975 : undefined }),
+        whenKeyPressed(name[0], { comment: index === 0 ? 'Every palette clone hears every key. Only the clone whose costume matches the key’s colour places a peg, and the hidden original is skipped through ‘is clone’.' : undefined, y: 2091 + index * 269, commentX: index === 0 ? 975 : undefined }),
         block('control_if', {
           inputs: {
             CONDITION: condition(block('operator_and', {
@@ -80,7 +81,7 @@ export function paletteSprite() {
         })
       ]),
       [
-        defineProcedure('place peg', { comment: 'Adds this colour to the guess and makes a Guess clone, which takes the next hole. Refused when the row is full, the game is over, or a confirmation is open.', y: 1659, commentX: 975 }),
+        defineProcedure('place peg', { comment: 'Adds this colour to the guess and makes a Guess clone, which takes the next hole. Refused when the row is full, the game is over, or a confirmation is open.', y: 1709, commentX: 975 }),
         block('control_if', {
           inputs: {
             CONDITION: condition(block('operator_and', {

@@ -48,6 +48,10 @@ export function markPressed(pressedAt) {
   return block('data_setvariableto', { inputs: { VALUE: text(block('sensing_dayssince2000')) }, fields: { VARIABLE: pressedAt } });
 }
 
+export function forgetPressed(pressedAt) {
+  return block('data_setvariableto', { inputs: { VALUE: text(-1) }, fields: { VARIABLE: pressedAt } });
+}
+
 export function sizeCue(pressedAt) {
   const secondsSincePressed = block('operator_multiply', {
     inputs: {
