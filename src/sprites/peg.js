@@ -17,7 +17,7 @@ export function pegSprite() {
         callProcedure('pick code')
       ],
       [
-        defineProcedure('pick code'),
+        defineProcedure('pick code', { comment: 'Picks four random colours, repeats allowed, into the ‘code’ list, and leaves a clone with the matching costume for each one above the board. The Cover hides them until the game ends.' }),
         block('data_deletealloflist', { fields: { LIST: CODE_LIST } }),
         block('motion_gotoxy', { inputs: { X: number(-64), Y: number(164) } }),
         block('control_repeat', {

@@ -28,11 +28,11 @@ export function stageTarget() {
     },
     ...buildScripts(
       [
-        block('event_whenflagclicked'),
+        block('event_whenflagclicked', { comment: 'The green flag only sends ‘new game’. All setup runs on that message, so the New game button can restart without the green flag.' }),
         block('event_broadcast', { inputs: { BROADCAST_INPUT: message(NEW_GAME_BROADCAST) } })
       ],
       [
-        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST } }),
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST }, comment: 'Resets the shared game state: back to row 1, playing, no confirmation open, and an empty guess with nothing placed.' }),
         block('data_setvariableto', { inputs: { VALUE: text(1) }, fields: { VARIABLE: ROW_VARIABLE } }),
         block('data_setvariableto', { inputs: { VALUE: text(1) }, fields: { VARIABLE: PLAYING_VARIABLE } }),
         block('data_setvariableto', { inputs: { VALUE: text(0) }, fields: { VARIABLE: CONFIRMING_VARIABLE } }),
@@ -40,7 +40,7 @@ export function stageTarget() {
         block('data_setvariableto', { inputs: { VALUE: text(0) }, fields: { VARIABLE: PLACED_VARIABLE } })
       ],
       [
-        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: CONFIRM_NEW_GAME_BROADCAST } }),
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: CONFIRM_NEW_GAME_BROADCAST }, comment: 'While ‘confirming’ is 1, the palette, Check, Undo and every key ignore input.' }),
         block('data_setvariableto', { inputs: { VALUE: text(1) }, fields: { VARIABLE: CONFIRMING_VARIABLE } })
       ],
       [

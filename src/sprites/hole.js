@@ -12,7 +12,7 @@ export function holeSprite() {
         callProcedure('draw board')
       ],
       [
-        defineProcedure('draw board'),
+        defineProcedure('draw board', { comment: 'Walks the board row by row, leaving a clone at each hole: four large code holes, then a 2×2 group of small feedback holes. Runs without screen refresh, so the whole board appears at once.' }),
         block('motion_gotoxy', { inputs: { X: number(-64), Y: number(128) } }),
         block('control_repeat', {
           inputs: { TIMES: number(10) },

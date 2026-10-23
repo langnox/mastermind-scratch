@@ -26,7 +26,7 @@ export function guessSprite() {
         block('looks_hide')
       ],
       [
-        block('control_start_as_clone'),
+        block('control_start_as_clone', { comment: 'Takes the next slot from the ‘placed’ counter rather than from the guess length, so pegs entered in the same frame still land in separate holes. It remembers its slot and row for undo.' }),
         block('data_changevariableby', { inputs: { VALUE: number(1) }, fields: { VARIABLE: PLACED_VARIABLE } }),
         block('data_setvariableto', { inputs: { VALUE: text(variable(PLACED_VARIABLE)) }, fields: { VARIABLE: MY_INDEX_VARIABLE } }),
         block('data_setvariableto', { inputs: { VALUE: text(row()) }, fields: { VARIABLE: MY_ROW_VARIABLE } }),
@@ -42,7 +42,7 @@ export function guessSprite() {
         block('looks_show')
       ],
       [
-        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: UNDO_BROADCAST } }),
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: UNDO_BROADCAST }, comment: 'Only the peg beyond the end of the shortened guess, in the current row, deletes itself.' }),
         block('control_if', {
           inputs: {
             CONDITION: condition(block('operator_and', {

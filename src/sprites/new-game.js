@@ -25,7 +25,7 @@ export function newGameSprite() {
         block('looks_show')
       ],
       [
-        block('event_whenthisspriteclicked'),
+        block('event_whenthisspriteclicked', { comment: 'Asks first only if a game is in progress with something to lose. Otherwise it starts a new game straight away.' }),
         markPressed(NEW_GAME_PRESSED_AT),
         block('control_if_else', {
           inputs: {

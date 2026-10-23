@@ -51,7 +51,7 @@ export function thumbnailSprite() {
     isStage: false, name: 'Thumbnail', variables: {}, lists: {}, broadcasts: {},
     ...buildScripts(
       [
-        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST } }),
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST }, comment: 'Covers the stage until a game starts, so online Scratch captures this sample board as the thumbnail when the project is saved.' }),
         block('looks_hide')
       ]
     ),

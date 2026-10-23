@@ -44,7 +44,7 @@ export function undoSprite() {
         callProcedure('undo peg')
       ],
       [
-        defineProcedure('undo peg'),
+        defineProcedure('undo peg', { comment: 'Checks there is a peg first, because the left arrow works even while the button is hidden.' }),
         block('control_if', {
           inputs: {
             CONDITION: condition(block('operator_and', {

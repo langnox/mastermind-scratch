@@ -29,7 +29,7 @@ export function feedbackSprite() {
         block('looks_show')
       ],
       [
-        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: SCORE_BROADCAST } }),
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: SCORE_BROADCAST }, comment: 'Only the original sprite scores. Clones hear ‘score’ too, and would otherwise move themselves into the new row.' }),
         block('control_if', {
           inputs: { CONDITION: condition(block('operator_equals', { inputs: { OPERAND1: text(variable(IS_CLONE_VARIABLE)), OPERAND2: text(0) } })) },
           substack: [
@@ -39,7 +39,7 @@ export function feedbackSprite() {
         })
       ],
       [
-        defineProcedure('score guess'),
+        defineProcedure('score guess', { comment: 'First pass: exact matches count as black, and the rest go into ‘code left’ and ‘guess left’. Second pass: each leftover guess colour still in ‘code left’ counts as white and is struck out, so no code peg counts twice.' }),
         block('data_setvariableto', { inputs: { VALUE: text(0) }, fields: { VARIABLE: BLACK_VARIABLE } }),
         block('data_setvariableto', { inputs: { VALUE: text(0) }, fields: { VARIABLE: WHITE_VARIABLE } }),
         block('data_deletealloflist', { fields: { LIST: CODE_LEFT_LIST } }),
@@ -97,7 +97,7 @@ export function feedbackSprite() {
         })
       ],
       [
-        defineProcedure('show feedback'),
+        defineProcedure('show feedback', { comment: 'Leaves black clones first, then white, filling the row’s 2×2 feedback holes left to right, top to bottom.' }),
         block('motion_gotoxy', {
           inputs: {
             X: number(64),
