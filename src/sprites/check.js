@@ -1,5 +1,5 @@
 import { number, text, message, condition, block, buildBlocks } from '../blocks.js';
-import { GUESS_LIST, ROW_VARIABLE, NEXT_ROW_BROADCAST, guessLength, buttonCostume } from '../shared.js';
+import { GUESS_LIST, ROW_VARIABLE, NEXT_ROW_BROADCAST, SCORE_BROADCAST, guessLength, buttonCostume } from '../shared.js';
 
 export function checkSprite() {
   return {
@@ -27,6 +27,7 @@ export function checkSprite() {
         block('control_if', {
           inputs: { CONDITION: condition(block('operator_equals', { inputs: { OPERAND1: text(guessLength()), OPERAND2: text(4) } })) },
           substack: [
+            block('event_broadcastandwait', { inputs: { BROADCAST_INPUT: message(SCORE_BROADCAST) } }),
             block('data_changevariableby', { inputs: { VALUE: number(1) }, fields: { VARIABLE: ROW_VARIABLE } }),
             block('data_deletealloflist', { fields: { LIST: GUESS_LIST } }),
             block('event_broadcast', { inputs: { BROADCAST_INPUT: message(NEXT_ROW_BROADCAST) } })

@@ -5,6 +5,9 @@ export const GUESS_LIST = ['guess', 'guess-list'];
 export const ROW_VARIABLE = ['row', 'row-variable'];
 export const NEXT_ROW_BROADCAST = ['next row', 'next-row-broadcast'];
 export const UNDO_BROADCAST = ['undo', 'undo-broadcast'];
+export const SCORE_BROADCAST = ['score', 'score-broadcast'];
+export const BLACK_VARIABLE = ['black', 'black-variable'];
+export const WHITE_VARIABLE = ['white', 'white-variable'];
 
 export function guessLength() {
   return block('data_lengthoflist', { fields: { LIST: GUESS_LIST } });
