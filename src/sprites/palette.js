@@ -1,5 +1,5 @@
 import { number, text, variable, condition, costume, cloneOf, defineProcedure, callProcedure, whenKeyPressed, block, buildBlocks, svgCostume } from '../blocks.js';
-import { GUESS_LIST, NEW_GAME_BROADCAST, PLAYING_VARIABLE, guessLength, PEG_COLOURS } from '../shared.js';
+import { GUESS_LIST, NEW_GAME_BROADCAST, CONFIRM_NEW_GAME_BROADCAST, CANCEL_NEW_GAME_BROADCAST, PLAYING_VARIABLE, guessLength, notConfirming, PEG_COLOURS } from '../shared.js';
 
 export function paletteSprite() {
   const PALETTE_IS_CLONE_VARIABLE = ['is clone', 'palette-is-clone-variable'];
@@ -42,6 +42,19 @@ export function paletteSprite() {
         block('looks_show')
       ],
       [
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: CONFIRM_NEW_GAME_BROADCAST } }),
+        block('looks_hide')
+      ],
+      [
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: CANCEL_NEW_GAME_BROADCAST } }),
+        block('control_if', {
+          inputs: { CONDITION: condition(block('operator_equals', { inputs: { OPERAND1: text(variable(PALETTE_IS_CLONE_VARIABLE)), OPERAND2: text(1) } })) },
+          substack: [
+            block('looks_show')
+          ]
+        })
+      ],
+      [
         block('event_whenthisspriteclicked'),
         callProcedure('place peg')
       ],
@@ -70,7 +83,12 @@ export function paletteSprite() {
             CONDITION: condition(block('operator_and', {
               inputs: {
                 OPERAND1: condition(block('operator_lt', { inputs: { OPERAND1: text(guessLength()), OPERAND2: text(4) } })),
-                OPERAND2: condition(block('operator_equals', { inputs: { OPERAND1: text(variable(PLAYING_VARIABLE)), OPERAND2: text(1) } }))
+                OPERAND2: condition(block('operator_and', {
+                  inputs: {
+                    OPERAND1: condition(block('operator_equals', { inputs: { OPERAND1: text(variable(PLAYING_VARIABLE)), OPERAND2: text(1) } })),
+                    OPERAND2: condition(notConfirming())
+                  }
+                }))
               }
             }))
           },

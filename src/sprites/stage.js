@@ -1,5 +1,5 @@
 import { text, message, block, buildBlocks, svgCostume } from '../blocks.js';
-import { CODE_LIST, GUESS_LIST, ROW_VARIABLE, NEXT_ROW_BROADCAST, UNDO_BROADCAST, NEW_GAME_BROADCAST, SCORE_BROADCAST, WIN_BROADCAST, LOSE_BROADCAST, PLAYING_VARIABLE, BLACK_VARIABLE, WHITE_VARIABLE } from '../shared.js';
+import { CODE_LIST, GUESS_LIST, ROW_VARIABLE, NEXT_ROW_BROADCAST, UNDO_BROADCAST, NEW_GAME_BROADCAST, CONFIRM_NEW_GAME_BROADCAST, CANCEL_NEW_GAME_BROADCAST, SCORE_BROADCAST, WIN_BROADCAST, LOSE_BROADCAST, PLAYING_VARIABLE, CONFIRMING_VARIABLE, BLACK_VARIABLE, WHITE_VARIABLE } from '../shared.js';
 
 export function stageTarget() {
   return {
@@ -8,6 +8,8 @@ export function stageTarget() {
       [NEXT_ROW_BROADCAST[1]]: NEXT_ROW_BROADCAST[0],
       [UNDO_BROADCAST[1]]: UNDO_BROADCAST[0],
       [NEW_GAME_BROADCAST[1]]: NEW_GAME_BROADCAST[0],
+      [CONFIRM_NEW_GAME_BROADCAST[1]]: CONFIRM_NEW_GAME_BROADCAST[0],
+      [CANCEL_NEW_GAME_BROADCAST[1]]: CANCEL_NEW_GAME_BROADCAST[0],
       [SCORE_BROADCAST[1]]: SCORE_BROADCAST[0],
       [WIN_BROADCAST[1]]: WIN_BROADCAST[0],
       [LOSE_BROADCAST[1]]: LOSE_BROADCAST[0]
@@ -15,6 +17,7 @@ export function stageTarget() {
     variables: {
       [ROW_VARIABLE[1]]: [ROW_VARIABLE[0], 1],
       [PLAYING_VARIABLE[1]]: [PLAYING_VARIABLE[0], 1],
+      [CONFIRMING_VARIABLE[1]]: [CONFIRMING_VARIABLE[0], 0],
       [BLACK_VARIABLE[1]]: [BLACK_VARIABLE[0], 0],
       [WHITE_VARIABLE[1]]: [WHITE_VARIABLE[0], 0]
     },
@@ -31,7 +34,16 @@ export function stageTarget() {
         block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST } }),
         block('data_setvariableto', { inputs: { VALUE: text(1) }, fields: { VARIABLE: ROW_VARIABLE } }),
         block('data_setvariableto', { inputs: { VALUE: text(1) }, fields: { VARIABLE: PLAYING_VARIABLE } }),
+        block('data_setvariableto', { inputs: { VALUE: text(0) }, fields: { VARIABLE: CONFIRMING_VARIABLE } }),
         block('data_deletealloflist', { fields: { LIST: GUESS_LIST } })
+      ],
+      [
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: CONFIRM_NEW_GAME_BROADCAST } }),
+        block('data_setvariableto', { inputs: { VALUE: text(1) }, fields: { VARIABLE: CONFIRMING_VARIABLE } })
+      ],
+      [
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: CANCEL_NEW_GAME_BROADCAST } }),
+        block('data_setvariableto', { inputs: { VALUE: text(0) }, fields: { VARIABLE: CONFIRMING_VARIABLE } })
       ]
     ),
     currentCostume: 0,

@@ -1,5 +1,5 @@
 import { number, text, variable, message, condition, defineProcedure, callProcedure, whenKeyPressed, block, buildBlocks } from '../blocks.js';
-import { GUESS_LIST, ROW_VARIABLE, NEXT_ROW_BROADCAST, NEW_GAME_BROADCAST, SCORE_BROADCAST, WIN_BROADCAST, LOSE_BROADCAST, PLAYING_VARIABLE, BLACK_VARIABLE, guessLength, row, buttonCostume } from '../shared.js';
+import { GUESS_LIST, ROW_VARIABLE, NEXT_ROW_BROADCAST, NEW_GAME_BROADCAST, SCORE_BROADCAST, WIN_BROADCAST, LOSE_BROADCAST, PLAYING_VARIABLE, BLACK_VARIABLE, guessLength, row, notConfirming, buttonCostume } from '../shared.js';
 
 export function checkSprite() {
   return {
@@ -11,7 +11,14 @@ export function checkSprite() {
         block('control_forever', {
           substack: [
             block('control_if_else', {
-              inputs: { CONDITION: condition(block('operator_equals', { inputs: { OPERAND1: text(guessLength()), OPERAND2: text(4) } })) },
+              inputs: {
+                CONDITION: condition(block('operator_and', {
+                  inputs: {
+                    OPERAND1: condition(block('operator_equals', { inputs: { OPERAND1: text(guessLength()), OPERAND2: text(4) } })),
+                    OPERAND2: condition(notConfirming())
+                  }
+                }))
+              },
               substack: [
                 block('looks_show')
               ],
@@ -33,7 +40,14 @@ export function checkSprite() {
       [
         defineProcedure('submit guess', { warp: false }),
         block('control_if', {
-          inputs: { CONDITION: condition(block('operator_equals', { inputs: { OPERAND1: text(guessLength()), OPERAND2: text(4) } })) },
+          inputs: {
+            CONDITION: condition(block('operator_and', {
+              inputs: {
+                OPERAND1: condition(block('operator_equals', { inputs: { OPERAND1: text(guessLength()), OPERAND2: text(4) } })),
+                OPERAND2: condition(notConfirming())
+              }
+            }))
+          },
           substack: [
             block('event_broadcastandwait', { inputs: { BROADCAST_INPUT: message(SCORE_BROADCAST) } }),
             block('data_deletealloflist', { fields: { LIST: GUESS_LIST } }),

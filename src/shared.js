@@ -1,4 +1,4 @@
-import { number, block, svgCostume, circleCostume } from './blocks.js';
+import { number, text, variable, block, svgCostume, circleCostume } from './blocks.js';
 
 export const CODE_LIST = ['code', 'code-list'];
 export const GUESS_LIST = ['guess', 'guess-list'];
@@ -6,10 +6,13 @@ export const ROW_VARIABLE = ['row', 'row-variable'];
 export const NEXT_ROW_BROADCAST = ['next row', 'next-row-broadcast'];
 export const UNDO_BROADCAST = ['undo', 'undo-broadcast'];
 export const NEW_GAME_BROADCAST = ['new game', 'new-game-broadcast'];
+export const CONFIRM_NEW_GAME_BROADCAST = ['confirm new game', 'confirm-new-game-broadcast'];
+export const CANCEL_NEW_GAME_BROADCAST = ['cancel new game', 'cancel-new-game-broadcast'];
 export const SCORE_BROADCAST = ['score', 'score-broadcast'];
 export const WIN_BROADCAST = ['win', 'win-broadcast'];
 export const LOSE_BROADCAST = ['lose', 'lose-broadcast'];
 export const PLAYING_VARIABLE = ['playing', 'playing-variable'];
+export const CONFIRMING_VARIABLE = ['confirming', 'confirming-variable'];
 export const BLACK_VARIABLE = ['black', 'black-variable'];
 export const WHITE_VARIABLE = ['white', 'white-variable'];
 
@@ -19,6 +22,10 @@ export function guessLength() {
 
 export function row() {
   return block('data_variable', { fields: { VARIABLE: ROW_VARIABLE } });
+}
+
+export function notConfirming() {
+  return block('operator_equals', { inputs: { OPERAND1: text(variable(CONFIRMING_VARIABLE)), OPERAND2: text(0) } });
 }
 
 export function rowY() {

@@ -1,5 +1,5 @@
 import { number, text, message, condition, defineProcedure, callProcedure, whenKeyPressed, block, buildBlocks } from '../blocks.js';
-import { GUESS_LIST, UNDO_BROADCAST, NEW_GAME_BROADCAST, guessLength, buttonCostume } from '../shared.js';
+import { GUESS_LIST, UNDO_BROADCAST, NEW_GAME_BROADCAST, guessLength, notConfirming, buttonCostume } from '../shared.js';
 
 export function undoSprite() {
   return {
@@ -11,7 +11,14 @@ export function undoSprite() {
         block('control_forever', {
           substack: [
             block('control_if_else', {
-              inputs: { CONDITION: condition(block('operator_gt', { inputs: { OPERAND1: text(guessLength()), OPERAND2: text(0) } })) },
+              inputs: {
+                CONDITION: condition(block('operator_and', {
+                  inputs: {
+                    OPERAND1: condition(block('operator_gt', { inputs: { OPERAND1: text(guessLength()), OPERAND2: text(0) } })),
+                    OPERAND2: condition(notConfirming())
+                  }
+                }))
+              },
               substack: [
                 block('looks_show')
               ],
@@ -33,7 +40,14 @@ export function undoSprite() {
       [
         defineProcedure('undo peg'),
         block('control_if', {
-          inputs: { CONDITION: condition(block('operator_gt', { inputs: { OPERAND1: text(guessLength()), OPERAND2: text(0) } })) },
+          inputs: {
+            CONDITION: condition(block('operator_and', {
+              inputs: {
+                OPERAND1: condition(block('operator_gt', { inputs: { OPERAND1: text(guessLength()), OPERAND2: text(0) } })),
+                OPERAND2: condition(notConfirming())
+              }
+            }))
+          },
           substack: [
             block('data_deleteoflist', { inputs: { INDEX: number(guessLength()) }, fields: { LIST: GUESS_LIST } }),
             block('event_broadcast', { inputs: { BROADCAST_INPUT: message(UNDO_BROADCAST) } })
