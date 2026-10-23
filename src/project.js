@@ -8,6 +8,7 @@ import { checkSprite } from './sprites/check.js';
 import { undoSprite } from './sprites/undo.js';
 import { feedbackSprite } from './sprites/feedback.js';
 import { bannerSprite } from './sprites/banner.js';
+import { newGameSprite } from './sprites/new-game.js';
 
 export const PROJECT = {
   targets: [
@@ -20,7 +21,8 @@ export const PROJECT = {
     checkSprite(),
     undoSprite(),
     feedbackSprite(),
-    bannerSprite()
+    bannerSprite(),
+    newGameSprite()
   ],
   monitors: [], extensions: [],
   meta: { semver: '3.0.0', vm: '0.2.0', agent: '' }
