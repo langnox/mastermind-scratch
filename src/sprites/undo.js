@@ -1,4 +1,4 @@
-import { number, text, message, condition, block, buildBlocks } from '../blocks.js';
+import { number, text, message, condition, defineProcedure, callProcedure, whenKeyPressed, block, buildBlocks } from '../blocks.js';
 import { GUESS_LIST, UNDO_BROADCAST, guessLength, buttonCostume } from '../shared.js';
 
 export function undoSprite() {
@@ -24,8 +24,21 @@ export function undoSprite() {
       ],
       [
         block('event_whenthisspriteclicked'),
-        block('data_deleteoflist', { inputs: { INDEX: number(guessLength()) }, fields: { LIST: GUESS_LIST } }),
-        block('event_broadcast', { inputs: { BROADCAST_INPUT: message(UNDO_BROADCAST) } })
+        callProcedure('undo peg')
+      ],
+      [
+        whenKeyPressed('left arrow'),
+        callProcedure('undo peg')
+      ],
+      [
+        defineProcedure('undo peg'),
+        block('control_if', {
+          inputs: { CONDITION: condition(block('operator_gt', { inputs: { OPERAND1: text(guessLength()), OPERAND2: text(0) } })) },
+          substack: [
+            block('data_deleteoflist', { inputs: { INDEX: number(guessLength()) }, fields: { LIST: GUESS_LIST } }),
+            block('event_broadcast', { inputs: { BROADCAST_INPUT: message(UNDO_BROADCAST) } })
+          ]
+        })
       ]
     ),
     currentCostume: 0,
