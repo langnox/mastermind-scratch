@@ -45,7 +45,7 @@ export function deleteIfClone(isClone) {
 }
 
 export function markPressed(pressedAt) {
-  return block('data_setvariableto', { inputs: { VALUE: text(block('sensing_dayssince2000')) }, fields: { VARIABLE: pressedAt } });
+  return block('data_setvariableto', { inputs: { VALUE: text(block('sensing_timer')) }, fields: { VARIABLE: pressedAt } });
 }
 
 export function forgetPressed(pressedAt) {
@@ -53,12 +53,7 @@ export function forgetPressed(pressedAt) {
 }
 
 export function sizeCue(pressedAt) {
-  const secondsSincePressed = block('operator_multiply', {
-    inputs: {
-      NUM1: number(block('operator_subtract', { inputs: { NUM1: number(block('sensing_dayssince2000')), NUM2: number(variable(pressedAt)) } })),
-      NUM2: number(86400)
-    }
-  });
+  const secondsSincePressed = block('operator_subtract', { inputs: { NUM1: number(block('sensing_timer')), NUM2: number(variable(pressedAt)) } });
   return block('control_if_else', {
     inputs: { CONDITION: condition(block('operator_lt', { inputs: { OPERAND1: text(secondsSincePressed), OPERAND2: text(0.1) } })) },
     substack: [
