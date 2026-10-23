@@ -12,6 +12,7 @@ import { newGameSprite } from './sprites/new-game.js';
 import { yesSprite } from './sprites/yes.js';
 import { noSprite } from './sprites/no.js';
 import { coverSprite } from './sprites/cover.js';
+import { thumbnailSprite } from './sprites/thumbnail.js';
 
 export const PROJECT = {
   targets: [
@@ -28,7 +29,8 @@ export const PROJECT = {
     newGameSprite(),
     yesSprite(),
     noSprite(),
-    coverSprite()
+    coverSprite(),
+    thumbnailSprite()
   ],
   monitors: [], extensions: [],
   meta: { semver: '3.0.0', vm: '0.2.0', agent: '' }
