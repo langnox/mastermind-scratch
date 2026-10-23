@@ -115,6 +115,15 @@ export function svgCostume(name, svg, rotationCenterX, rotationCenterY) {
   return { name, dataFormat: 'svg', assetId: asset.assetId, md5ext: asset.assetId + '.svg', rotationCenterX, rotationCenterY };
 }
 
+export function roundedRect(width, height, radius, fill) {
+  const r = radius;
+  return `<path d="M${r} 0H${width - r}A${r} ${r} 0 0 1 ${width} ${r}V${height - r}A${r} ${r} 0 0 1 ${width - r} ${height}H${r}A${r} ${r} 0 0 1 0 ${height - r}V${r}A${r} ${r} 0 0 1 ${r} 0Z" fill="${fill}"/>`;
+}
+
+export function centredText(content, x, y, size, fill) {
+  return `<text transform="translate(${x} 0)" y="${y}" font-family="Sans Serif" font-size="${size}" fill="${fill}" text-anchor="middle">${content}</text>`;
+}
+
 export function circleCostume(name, diameter, fill) {
   const radius = diameter / 2;
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${diameter}" height="${diameter}"><circle cx="${radius}" cy="${radius}" r="${radius}" fill="${fill}"/></svg>`;
