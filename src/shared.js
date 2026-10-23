@@ -29,13 +29,15 @@ export function buttonCostume(label) {
   return svgCostume('button', svg, 32, 13);
 }
 
+export const PEG_COLOURS = [
+  { name: 'red', fill: '#e24b4a' },
+  { name: 'orange', fill: '#f39c33' },
+  { name: 'yellow', fill: '#f2d43a' },
+  { name: 'green', fill: '#5ba84a' },
+  { name: 'blue', fill: '#378add' },
+  { name: 'purple', fill: '#7f77dd' }
+];
+
 export function pegCostumes() {
-  return [
-    circleCostume('red', 22, '#e24b4a'),
-    circleCostume('orange', 22, '#f39c33'),
-    circleCostume('yellow', 22, '#f2d43a'),
-    circleCostume('green', 22, '#5ba84a'),
-    circleCostume('blue', 22, '#378add'),
-    circleCostume('purple', 22, '#7f77dd')
-  ];
+  return PEG_COLOURS.map(({ name, fill }) => circleCostume(name, 22, fill));
 }
