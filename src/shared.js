@@ -33,6 +33,17 @@ export function pressedAtVariable(sprite) {
   return ['pressed at', `${sprite}-pressed-at-variable`];
 }
 
+export function isCloneVariable(sprite) {
+  return ['is clone', `${sprite}-is-clone-variable`];
+}
+
+export function deleteIfClone(isClone) {
+  return block('control_if', {
+    inputs: { CONDITION: condition(block('operator_equals', { inputs: { OPERAND1: text(variable(isClone)), OPERAND2: text(1) } })) },
+    substack: [block('control_delete_this_clone')]
+  });
+}
+
 export function markPressed(pressedAt) {
   return block('data_setvariableto', { inputs: { VALUE: text(block('sensing_dayssince2000')) }, fields: { VARIABLE: pressedAt } });
 }
