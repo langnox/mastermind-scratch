@@ -1,4 +1,4 @@
-import { number, text, variable, message, condition, block, buildBlocks } from '../blocks.js';
+import { number, text, variable, message, condition, defineProcedure, callProcedure, whenKeyPressed, block, buildBlocks } from '../blocks.js';
 import { GUESS_LIST, ROW_VARIABLE, NEXT_ROW_BROADCAST, SCORE_BROADCAST, WIN_BROADCAST, LOSE_BROADCAST, PLAYING_VARIABLE, BLACK_VARIABLE, guessLength, row, buttonCostume } from '../shared.js';
 
 export function checkSprite() {
@@ -24,6 +24,14 @@ export function checkSprite() {
       ],
       [
         block('event_whenthisspriteclicked'),
+        callProcedure('submit guess', { warp: false })
+      ],
+      [
+        whenKeyPressed('enter'),
+        callProcedure('submit guess', { warp: false })
+      ],
+      [
+        defineProcedure('submit guess', { warp: false }),
         block('control_if', {
           inputs: { CONDITION: condition(block('operator_equals', { inputs: { OPERAND1: text(guessLength()), OPERAND2: text(4) } })) },
           substack: [
