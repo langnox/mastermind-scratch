@@ -1,9 +1,14 @@
-import { number, text, variable, condition, costume, cloneOf, defineProcedure, callProcedure, block, buildBlocks } from '../blocks.js';
-import { GUESS_LIST, PLAYING_VARIABLE, guessLength, pegCostumes } from '../shared.js';
+import { number, text, variable, condition, costume, cloneOf, defineProcedure, callProcedure, whenKeyPressed, block, buildBlocks } from '../blocks.js';
+import { GUESS_LIST, PLAYING_VARIABLE, guessLength, PEG_COLOURS, pegCostumes } from '../shared.js';
 
 export function paletteSprite() {
+  const PALETTE_IS_CLONE_VARIABLE = ['is clone', 'palette-is-clone-variable'];
+
   return {
-    isStage: false, name: 'Palette', variables: {}, lists: {}, broadcasts: {}, comments: {},
+    isStage: false, name: 'Palette', lists: {}, broadcasts: {}, comments: {},
+    variables: {
+      [PALETTE_IS_CLONE_VARIABLE[1]]: [PALETTE_IS_CLONE_VARIABLE[0], 0]
+    },
     blocks: buildBlocks(
       [
         block('event_whenflagclicked'),
@@ -25,10 +30,33 @@ export function paletteSprite() {
       ],
       [
         block('control_start_as_clone'),
+        block('data_setvariableto', { inputs: { VALUE: text(1) }, fields: { VARIABLE: PALETTE_IS_CLONE_VARIABLE } }),
         block('looks_show')
       ],
       [
         block('event_whenthisspriteclicked'),
+        callProcedure('place peg')
+      ],
+      ...PEG_COLOURS.map(({ name }) => [
+        whenKeyPressed(name[0]),
+        block('control_if', {
+          inputs: {
+            CONDITION: condition(block('operator_and', {
+              inputs: {
+                OPERAND1: condition(block('operator_equals', { inputs: { OPERAND1: text(variable(PALETTE_IS_CLONE_VARIABLE)), OPERAND2: text(1) } })),
+                OPERAND2: condition(block('operator_equals', {
+                  inputs: { OPERAND1: text(block('looks_costumenumbername', { fields: { NUMBER_NAME: ['name', null] } })), OPERAND2: text(name) }
+                }))
+              }
+            }))
+          },
+          substack: [
+            callProcedure('place peg')
+          ]
+        })
+      ]),
+      [
+        defineProcedure('place peg'),
         block('control_if', {
           inputs: {
             CONDITION: condition(block('operator_and', {
