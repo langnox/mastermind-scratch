@@ -55,9 +55,10 @@ export function block(opcode, { inputs = {}, fields = {}, substack, substack2, s
   return { opcode, inputs, fields, substack, substack2, shadow, mutation };
 }
 
+let nextId = 1;
+
 export function buildBlocks(...scripts) {
   const blocks = {};
-  let nextId = 1;
 
   function addStack(stack, parentId) {
     let firstId = null;
