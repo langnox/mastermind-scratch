@@ -1,4 +1,4 @@
-import { number, costume, cloneOf, block, buildBlocks, circleCostume } from '../blocks.js';
+import { number, costume, cloneOf, defineProcedure, callProcedure, block, buildBlocks, circleCostume } from '../blocks.js';
 
 export function holeSprite() {
   return {
@@ -7,6 +7,10 @@ export function holeSprite() {
       [
         block('event_whenflagclicked'),
         block('looks_hide'),
+        callProcedure('draw board')
+      ],
+      [
+        defineProcedure('draw board'),
         block('motion_gotoxy', { inputs: { X: number(-64), Y: number(128) } }),
         block('control_repeat', {
           inputs: { TIMES: number(10) },

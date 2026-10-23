@@ -1,4 +1,4 @@
-import { number, text, costume, cloneOf, block, buildBlocks, circleCostume } from '../blocks.js';
+import { number, text, costume, cloneOf, defineProcedure, callProcedure, block, buildBlocks, circleCostume } from '../blocks.js';
 import { CODE_LIST } from '../shared.js';
 
 export function pegSprite() {
@@ -13,6 +13,10 @@ export function pegSprite() {
       [
         block('event_whenflagclicked'),
         block('looks_hide'),
+        callProcedure('pick code')
+      ],
+      [
+        defineProcedure('pick code'),
         block('data_deletealloflist', { fields: { LIST: CODE_LIST } }),
         block('motion_gotoxy', { inputs: { X: number(-64), Y: number(164) } }),
         block('control_repeat', {
