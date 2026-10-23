@@ -1,8 +1,15 @@
-import { number, text, variable, condition, costume, cloneOf, defineProcedure, callProcedure, whenKeyPressed, block, buildBlocks } from '../blocks.js';
-import { GUESS_LIST, PLAYING_VARIABLE, guessLength, PEG_COLOURS, pegCostumes } from '../shared.js';
+import { number, text, variable, condition, costume, cloneOf, defineProcedure, callProcedure, whenKeyPressed, block, buildBlocks, svgCostume } from '../blocks.js';
+import { GUESS_LIST, PLAYING_VARIABLE, guessLength, PEG_COLOURS } from '../shared.js';
 
 export function paletteSprite() {
   const PALETTE_IS_CLONE_VARIABLE = ['is clone', 'palette-is-clone-variable'];
+
+  function paletteCostumes() {
+    return PEG_COLOURS.map(({ name, fill }) => {
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="44" height="22"><text x="6" y="16" font-family="Sans Serif" font-size="14" fill="#5f5e5a" text-anchor="middle">${name[0].toUpperCase()}</text><circle cx="33" cy="11" r="11" fill="${fill}"/></svg>`;
+      return svgCostume(name, svg, 33, 11);
+    });
+  }
 
   return {
     isStage: false, name: 'Palette', lists: {}, broadcasts: {}, comments: {},
@@ -77,7 +84,7 @@ export function paletteSprite() {
       ]
     ),
     currentCostume: 0,
-    costumes: pegCostumes(),
+    costumes: paletteCostumes(),
     sounds: [], volume: 100, layerOrder: 3, visible: false, x: 0, y: 0, size: 100, direction: 90, draggable: false, rotationStyle: 'all around'
   };
 }
