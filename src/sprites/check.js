@@ -8,7 +8,19 @@ export function checkSprite() {
       [
         block('event_whenflagclicked'),
         block('motion_gotoxy', { inputs: { X: number(160), Y: number(-160) } }),
-        block('looks_show')
+        block('control_forever', {
+          substack: [
+            block('control_if_else', {
+              inputs: { CONDITION: condition(block('operator_equals', { inputs: { OPERAND1: text(guessLength()), OPERAND2: text(4) } })) },
+              substack: [
+                block('looks_show')
+              ],
+              substack2: [
+                block('looks_hide')
+              ]
+            })
+          ]
+        })
       ],
       [
         block('event_whenthisspriteclicked'),
