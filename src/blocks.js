@@ -6,6 +6,10 @@ export function text(value) {
   return value.opcode ? [3, value, [10, '']] : [1, [10, String(value)]];
 }
 
+export function condition(value) {
+  return [2, value];
+}
+
 export function costume(value) {
   const menu = block('looks_costume', { fields: { COSTUME: [value.opcode ? '' : value, null] }, shadow: true });
   return value.opcode ? [3, value, menu] : [1, menu];
