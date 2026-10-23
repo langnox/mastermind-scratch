@@ -6,6 +6,10 @@ export function text(value) {
   return value.opcode ? [3, value, [10, '']] : [1, [10, String(value)]];
 }
 
+export function message([name, id]) {
+  return [1, [11, name, id]];
+}
+
 export function condition(value) {
   return [2, value];
 }
@@ -29,8 +33,8 @@ export function callProcedure(proccode) {
   return block('procedures_call', { mutation });
 }
 
-export function block(opcode, { inputs = {}, fields = {}, substack, shadow = false, mutation } = {}) {
-  return { opcode, inputs, fields, substack, shadow, mutation };
+export function block(opcode, { inputs = {}, fields = {}, substack, substack2, shadow = false, mutation } = {}) {
+  return { opcode, inputs, fields, substack, substack2, shadow, mutation };
 }
 
 export function buildBlocks(...scripts) {
@@ -40,7 +44,7 @@ export function buildBlocks(...scripts) {
   function addStack(stack, parentId) {
     let firstId = null;
     let previousId = null;
-    for (const { opcode, inputs, fields, substack, shadow, mutation } of stack) {
+    for (const { opcode, inputs, fields, substack, substack2, shadow, mutation } of stack) {
       const id = String(nextId++);
       blocks[id] = { opcode, next: null, parent: previousId ?? parentId, inputs: {}, fields, shadow, topLevel: false, mutation };
       for (const [name, [type, ...parts]] of Object.entries(inputs)) {
@@ -48,6 +52,9 @@ export function buildBlocks(...scripts) {
       }
       if (substack) {
         blocks[id].inputs.SUBSTACK = [2, addStack(substack, id)];
+      }
+      if (substack2) {
+        blocks[id].inputs.SUBSTACK2 = [2, addStack(substack2, id)];
       }
       if (previousId) {
         blocks[previousId].next = id;
