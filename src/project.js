@@ -11,6 +11,7 @@ import { bannerSprite } from './sprites/banner.js';
 import { newGameSprite } from './sprites/new-game.js';
 import { yesSprite } from './sprites/yes.js';
 import { noSprite } from './sprites/no.js';
+import { coverSprite } from './sprites/cover.js';
 
 export const PROJECT = {
   targets: [
@@ -26,7 +27,8 @@ export const PROJECT = {
     bannerSprite(),
     newGameSprite(),
     yesSprite(),
-    noSprite()
+    noSprite(),
+    coverSprite()
   ],
   monitors: [], extensions: [],
   meta: { semver: '3.0.0', vm: '0.2.0', agent: '' }
