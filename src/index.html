@@ -3,8 +3,22 @@
 <head>
   <meta charset="utf-8">
   <title>Mastermind</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "@turbowarp/scaffolding": "https://cdn.jsdelivr.net/npm/@turbowarp/scaffolding@0.4.0/dist/scaffolding-min.js"
+      },
+      "integrity": {
+        "https://cdn.jsdelivr.net/npm/@turbowarp/scaffolding@0.4.0/dist/scaffolding-min.js": "sha384-pe8N8Iej9GBWyMLHnuBaSjfkRQnM4E8iRqNdIWdMZYxrpap2murB6Cs956MIsulB"
+      }
+    }
+  </script>
 </head>
 <body>
-  <h1>Mastermind</h1>
+  <button id="green-flag">Green flag</button>
+  <div id="stage"></div>
+
+  <script type="module" src="app.js"></script>
 </body>
 </html>
