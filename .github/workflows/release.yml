@@ -1,0 +1,54 @@
+name: Release the Scratch project
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - name: Build mastermind.sb3
+        run: |
+          mkdir sb3
+          node --input-type=module -e "
+            import { writeFileSync } from 'node:fs';
+            const { PROJECT } = await import('./src/project.js');
+            const { ASSETS } = await import('./src/blocks.js');
+            writeFileSync('sb3/project.json', JSON.stringify(PROJECT));
+            for (const { assetId, svg } of ASSETS) writeFileSync('sb3/' + assetId + '.svg', svg);
+          "
+          (cd sb3 && zip -X -q ../mastermind.sb3 *)
+      - name: Publish a release for this commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag="${GITHUB_SHA::7}"
+          if gh release view "$tag" > /dev/null 2>&1; then
+            echo "Release $tag already exists."
+            exit 0
+          fi
+          body="$(git log -1 --format=%b | sed '/^Co-Authored-By: /d')"
+          {
+            [ -n "$body" ] && printf '%s\n\n' "$body"
+            echo "mastermind.sb3 built from $GITHUB_SHA. Open it in online Scratch with File → Load from your computer."
+          } > notes.md
+          gh release create "$tag" mastermind.sb3 \
+            --target "$GITHUB_SHA" \
+            --title "$(git log -1 --format=%s)" \
+            --notes-file notes.md \
+            --latest
