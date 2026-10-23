@@ -1,5 +1,9 @@
 # Mastermind in Scratch
 
+## Online version
+
+The latest version is published at https://langnox.github.io/mastermind-scratch/.
+
 ## Running the app on your machine
 
 Run one of the following commands, then open http://localhost:8000/ in your browser.
