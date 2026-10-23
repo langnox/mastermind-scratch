@@ -1,5 +1,5 @@
-import { number, costume, cloneOf, defineProcedure, callProcedure, block, buildBlocks } from '../blocks.js';
-import { pegCostumes } from '../shared.js';
+import { number, text, condition, costume, cloneOf, defineProcedure, callProcedure, block, buildBlocks } from '../blocks.js';
+import { GUESS_LIST, guessLength, pegCostumes } from '../shared.js';
 
 export function paletteSprite() {
   return {
@@ -26,6 +26,19 @@ export function paletteSprite() {
       [
         block('control_start_as_clone'),
         block('looks_show')
+      ],
+      [
+        block('event_whenthisspriteclicked'),
+        block('control_if', {
+          inputs: { CONDITION: condition(block('operator_lt', { inputs: { OPERAND1: text(guessLength()), OPERAND2: text(4) } })) },
+          substack: [
+            block('data_addtolist', {
+              inputs: { ITEM: text(block('looks_costumenumbername', { fields: { NUMBER_NAME: ['number', null] } })) },
+              fields: { LIST: GUESS_LIST }
+            }),
+            block('control_create_clone_of', { inputs: { CLONE_OPTION: cloneOf('Guess') } })
+          ]
+        })
       ]
     ),
     currentCostume: 0,

@@ -1,12 +1,23 @@
-import { svgCostume } from '../blocks.js';
-import { CODE_LIST } from '../shared.js';
+import { text, block, buildBlocks, svgCostume } from '../blocks.js';
+import { CODE_LIST, GUESS_LIST, ROW_VARIABLE } from '../shared.js';
 
 export function stageTarget() {
   return {
-    isStage: true, name: 'Stage', variables: {}, broadcasts: {}, blocks: {}, comments: {},
-    lists: {
-      [CODE_LIST[1]]: [CODE_LIST[0], []]
+    isStage: true, name: 'Stage', broadcasts: {}, comments: {},
+    variables: {
+      [ROW_VARIABLE[1]]: [ROW_VARIABLE[0], 1]
     },
+    lists: {
+      [CODE_LIST[1]]: [CODE_LIST[0], []],
+      [GUESS_LIST[1]]: [GUESS_LIST[0], []]
+    },
+    blocks: buildBlocks(
+      [
+        block('event_whenflagclicked'),
+        block('data_setvariableto', { inputs: { VALUE: text(1) }, fields: { VARIABLE: ROW_VARIABLE } }),
+        block('data_deletealloflist', { fields: { LIST: GUESS_LIST } })
+      ]
+    ),
     currentCostume: 0,
     costumes: [
       svgCostume('backdrop', '<svg xmlns="http://www.w3.org/2000/svg" width="480" height="360"><rect width="480" height="360" fill="#f4f1ea"/></svg>', 240, 180)

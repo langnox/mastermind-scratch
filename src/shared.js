@@ -1,6 +1,12 @@
-import { circleCostume } from './blocks.js';
+import { block, circleCostume } from './blocks.js';
 
 export const CODE_LIST = ['code', 'code-list'];
+export const GUESS_LIST = ['guess', 'guess-list'];
+export const ROW_VARIABLE = ['row', 'row-variable'];
+
+export function guessLength() {
+  return block('data_lengthoflist', { fields: { LIST: GUESS_LIST } });
+}
 
 export function pegCostumes() {
   return [
