@@ -1,8 +1,8 @@
 import { number, text, variable, condition, costume, cloneOf, defineProcedure, callProcedure, whenKeyPressed, block, buildScripts, svgCostume } from '../blocks.js';
-import { GUESS_LIST, NEW_GAME_BROADCAST, CONFIRM_NEW_GAME_BROADCAST, CANCEL_NEW_GAME_BROADCAST, PLAYING_VARIABLE, guessLength, notConfirming, pressedAtVariable, markPressed, sizeCue, PEG_COLOURS } from '../shared.js';
+import { GUESS_LIST, NEW_GAME_BROADCAST, CONFIRM_NEW_GAME_BROADCAST, CANCEL_NEW_GAME_BROADCAST, PLAYING_VARIABLE, guessLength, notConfirming, pressedAtVariable, markPressed, sizeCue, PEG_COLOURS, isCloneVariable, deleteIfClone } from '../shared.js';
 
 export function paletteSprite() {
-  const PALETTE_IS_CLONE_VARIABLE = ['is clone', 'palette-is-clone-variable'];
+  const PALETTE_IS_CLONE_VARIABLE = isCloneVariable('palette');
   const PALETTE_PRESSED_AT = pressedAtVariable('palette');
 
   function paletteCostumes() {
@@ -21,7 +21,7 @@ export function paletteSprite() {
     ...buildScripts(
       [
         block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST } }),
-        block('control_delete_this_clone'),
+        deleteIfClone(PALETTE_IS_CLONE_VARIABLE),
         block('looks_hide'),
         callProcedure('show palette')
       ],

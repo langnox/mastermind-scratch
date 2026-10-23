@@ -1,13 +1,18 @@
-import { number, costume, cloneOf, defineProcedure, callProcedure, block, buildScripts, circleCostume } from '../blocks.js';
-import { NEW_GAME_BROADCAST } from '../shared.js';
+import { number, text, costume, cloneOf, defineProcedure, callProcedure, block, buildScripts, circleCostume } from '../blocks.js';
+import { NEW_GAME_BROADCAST, isCloneVariable, deleteIfClone } from '../shared.js';
 
 export function holeSprite() {
+  const IS_CLONE_VARIABLE = isCloneVariable('hole');
+
   return {
-    isStage: false, name: 'Hole', variables: {}, lists: {}, broadcasts: {},
+    isStage: false, name: 'Hole', lists: {}, broadcasts: {},
+    variables: {
+      [IS_CLONE_VARIABLE[1]]: [IS_CLONE_VARIABLE[0], 0]
+    },
     ...buildScripts(
       [
         block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST } }),
-        block('control_delete_this_clone'),
+        deleteIfClone(IS_CLONE_VARIABLE),
         block('looks_hide'),
         callProcedure('draw board')
       ],
@@ -49,6 +54,7 @@ export function holeSprite() {
       ],
       [
         block('control_start_as_clone'),
+        block('data_setvariableto', { inputs: { VALUE: text(1) }, fields: { VARIABLE: IS_CLONE_VARIABLE } }),
         block('looks_show')
       ]
     ),

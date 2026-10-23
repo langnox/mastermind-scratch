@@ -1,18 +1,20 @@
 import { number, text, costume, cloneOf, defineProcedure, callProcedure, block, buildScripts } from '../blocks.js';
-import { CODE_LIST, NEW_GAME_BROADCAST, pegCostumes } from '../shared.js';
+import { CODE_LIST, NEW_GAME_BROADCAST, pegCostumes, isCloneVariable, deleteIfClone } from '../shared.js';
 
 export function pegSprite() {
   const PEG_VARIABLE = ['peg', 'peg-variable'];
+  const IS_CLONE_VARIABLE = isCloneVariable('peg');
 
   return {
     isStage: false, name: 'Peg', lists: {}, broadcasts: {},
     variables: {
-      [PEG_VARIABLE[1]]: [PEG_VARIABLE[0], 0]
+      [PEG_VARIABLE[1]]: [PEG_VARIABLE[0], 0],
+      [IS_CLONE_VARIABLE[1]]: [IS_CLONE_VARIABLE[0], 0]
     },
     ...buildScripts(
       [
         block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST } }),
-        block('control_delete_this_clone'),
+        deleteIfClone(IS_CLONE_VARIABLE),
         block('looks_hide'),
         callProcedure('pick code')
       ],
@@ -41,6 +43,7 @@ export function pegSprite() {
       ],
       [
         block('control_start_as_clone'),
+        block('data_setvariableto', { inputs: { VALUE: text(1) }, fields: { VARIABLE: IS_CLONE_VARIABLE } }),
         block('looks_show')
       ]
     ),

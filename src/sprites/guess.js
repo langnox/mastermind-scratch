@@ -1,9 +1,10 @@
 import { number, text, variable, condition, costume, block, buildScripts } from '../blocks.js';
-import { GUESS_LIST, UNDO_BROADCAST, NEW_GAME_BROADCAST, PLACED_VARIABLE, guessLength, row, rowY, pegCostumes } from '../shared.js';
+import { GUESS_LIST, UNDO_BROADCAST, NEW_GAME_BROADCAST, PLACED_VARIABLE, guessLength, row, rowY, pegCostumes, isCloneVariable, deleteIfClone } from '../shared.js';
 
 export function guessSprite() {
   const MY_INDEX_VARIABLE = ['my index', 'my-index-variable'];
   const MY_ROW_VARIABLE = ['my row', 'my-row-variable'];
+  const IS_CLONE_VARIABLE = isCloneVariable('guess');
 
   function myIndex() {
     return block('data_variable', { fields: { VARIABLE: MY_INDEX_VARIABLE } });
@@ -17,16 +18,18 @@ export function guessSprite() {
     isStage: false, name: 'Guess', lists: {}, broadcasts: {},
     variables: {
       [MY_INDEX_VARIABLE[1]]: [MY_INDEX_VARIABLE[0], 0],
-      [MY_ROW_VARIABLE[1]]: [MY_ROW_VARIABLE[0], 0]
+      [MY_ROW_VARIABLE[1]]: [MY_ROW_VARIABLE[0], 0],
+      [IS_CLONE_VARIABLE[1]]: [IS_CLONE_VARIABLE[0], 0]
     },
     ...buildScripts(
       [
         block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST } }),
-        block('control_delete_this_clone'),
+        deleteIfClone(IS_CLONE_VARIABLE),
         block('looks_hide')
       ],
       [
         block('control_start_as_clone', { comment: 'Takes the next slot from the ‘placed’ counter rather than from the guess length, so pegs entered in the same frame still land in separate holes. It remembers its slot and row for undo.' }),
+        block('data_setvariableto', { inputs: { VALUE: text(1) }, fields: { VARIABLE: IS_CLONE_VARIABLE } }),
         block('data_changevariableby', { inputs: { VALUE: number(1) }, fields: { VARIABLE: PLACED_VARIABLE } }),
         block('data_setvariableto', { inputs: { VALUE: text(variable(PLACED_VARIABLE)) }, fields: { VARIABLE: MY_INDEX_VARIABLE } }),
         block('data_setvariableto', { inputs: { VALUE: text(row()) }, fields: { VARIABLE: MY_ROW_VARIABLE } }),
