@@ -10,8 +10,17 @@ export function color(value) {
   return value.opcode ? [3, value, [9, '#000000']] : [1, [9, value]];
 }
 
-export function block(opcode, { inputs = {}, fields = {}, substack } = {}) {
-  return { opcode, inputs, fields, substack };
+export function costume(value) {
+  const menu = block('looks_costume', { fields: { COSTUME: [value.opcode ? '' : value, null] }, shadow: true });
+  return value.opcode ? [3, value, menu] : [1, menu];
+}
+
+export function cloneOf(target) {
+  return [1, block('control_create_clone_of_menu', { fields: { CLONE_OPTION: [target, null] }, shadow: true })];
+}
+
+export function block(opcode, { inputs = {}, fields = {}, substack, shadow = false } = {}) {
+  return { opcode, inputs, fields, substack, shadow };
 }
 
 export function buildBlocks(...scripts) {
@@ -21,11 +30,11 @@ export function buildBlocks(...scripts) {
   function addStack(stack, parentId) {
     let firstId = null;
     let previousId = null;
-    for (const { opcode, inputs, fields, substack } of stack) {
+    for (const { opcode, inputs, fields, substack, shadow } of stack) {
       const id = String(nextId++);
-      blocks[id] = { opcode, next: null, parent: previousId ?? parentId, inputs: {}, fields, shadow: false, topLevel: false };
-      for (const [name, value] of Object.entries(inputs)) {
-        blocks[id].inputs[name] = value[0] === 3 ? [3, addStack([value[1]], id), value[2]] : value;
+      blocks[id] = { opcode, next: null, parent: previousId ?? parentId, inputs: {}, fields, shadow, topLevel: false };
+      for (const [name, [type, ...parts]] of Object.entries(inputs)) {
+        blocks[id].inputs[name] = [type, ...parts.map(part => part.opcode ? addStack([part], id) : part)];
       }
       if (substack) {
         blocks[id].inputs.SUBSTACK = [2, addStack(substack, id)];
