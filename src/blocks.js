@@ -6,6 +6,14 @@ export function text(value) {
   return value.opcode ? [3, value, [10, '']] : [1, [10, String(value)]];
 }
 
+export function variable(reference) {
+  return block('data_variable', { fields: { VARIABLE: reference } });
+}
+
+export function itemOf(index, list) {
+  return block('data_itemoflist', { inputs: { INDEX: number(index) }, fields: { LIST: list } });
+}
+
 export function message([name, id]) {
   return [1, [11, name, id]];
 }
