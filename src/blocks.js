@@ -37,9 +37,9 @@ export function cloneOf(target) {
   return [1, block('control_create_clone_of_menu', { fields: { CLONE_OPTION: [target, null] }, shadow: true })];
 }
 
-export function defineProcedure(proccode, { warp = true, comment } = {}) {
+export function defineProcedure(proccode, { warp = true, comment, x, y, commentX } = {}) {
   const mutation = { tagName: 'mutation', children: [], proccode, argumentids: '[]', argumentnames: '[]', argumentdefaults: '[]', warp: String(warp) };
-  return block('procedures_definition', { inputs: { custom_block: [1, block('procedures_prototype', { shadow: true, mutation })] }, comment });
+  return block('procedures_definition', { inputs: { custom_block: [1, block('procedures_prototype', { shadow: true, mutation })] }, comment, x, y, commentX });
 }
 
 export function callProcedure(proccode, { warp = true } = {}) {
@@ -47,12 +47,12 @@ export function callProcedure(proccode, { warp = true } = {}) {
   return block('procedures_call', { mutation });
 }
 
-export function whenKeyPressed(key, { comment } = {}) {
-  return block('event_whenkeypressed', { fields: { KEY_OPTION: [key, null] }, comment });
+export function whenKeyPressed(key, { comment, x, y, commentX } = {}) {
+  return block('event_whenkeypressed', { fields: { KEY_OPTION: [key, null] }, comment, x, y, commentX });
 }
 
-export function block(opcode, { inputs = {}, fields = {}, substack, substack2, shadow = false, mutation, comment } = {}) {
-  return { opcode, inputs, fields, substack, substack2, shadow, mutation, comment };
+export function block(opcode, { inputs = {}, fields = {}, substack, substack2, shadow = false, mutation, comment, x, y, commentX } = {}) {
+  return { opcode, inputs, fields, substack, substack2, shadow, mutation, comment, x, y, commentX };
 }
 
 let nextId = 1;
@@ -72,7 +72,7 @@ export function buildScripts(...scripts) {
       if (comment) {
         const commentId = `comment-${nextCommentId++}`;
         blocks[id].comment = commentId;
-        comments[commentId] = { blockId: id, x: 0, y: 0, width: 250, height: 40 + 18 * Math.ceil(comment.length / 32), minimized: false, text: comment };
+        comments[commentId] = { blockId: id, x: 0, y: 0, width: 250, height: 42 + 27 * Math.ceil(comment.length / 28), minimized: false, text: comment };
       }
       for (const [name, [type, ...parts]] of Object.entries(inputs)) {
         blocks[id].inputs[name] = [type, ...parts.map(part => part.opcode ? addStack([part], id) : part)];
@@ -94,10 +94,11 @@ export function buildScripts(...scripts) {
   }
 
   scripts.forEach((script, index) => {
+    const { x = 0, y = index * 200, commentX = 450 } = script[0];
     const id = addStack(script, null);
-    Object.assign(blocks[id], { topLevel: true, x: 0, y: index * 200 });
+    Object.assign(blocks[id], { topLevel: true, x, y });
     if (blocks[id].comment) {
-      Object.assign(comments[blocks[id].comment], { x: 450, y: index * 200 });
+      Object.assign(comments[blocks[id].comment], { x: commentX, y });
     }
   });
   return { blocks, comments };
