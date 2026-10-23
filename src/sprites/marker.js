@@ -1,5 +1,5 @@
-import { number, text, condition, block, buildBlocks, svgCostume } from '../blocks.js';
-import { NEXT_ROW_BROADCAST, WIN_BROADCAST, row, rowY } from '../shared.js';
+import { number, block, buildBlocks, svgCostume } from '../blocks.js';
+import { NEXT_ROW_BROADCAST, WIN_BROADCAST, LOSE_BROADCAST, rowY } from '../shared.js';
 
 export function markerSprite() {
   return {
@@ -12,18 +12,14 @@ export function markerSprite() {
       ],
       [
         block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEXT_ROW_BROADCAST } }),
-        block('control_if_else', {
-          inputs: { CONDITION: condition(block('operator_lt', { inputs: { OPERAND1: text(row()), OPERAND2: text(11) } })) },
-          substack: [
-            block('motion_sety', { inputs: { Y: number(rowY()) } })
-          ],
-          substack2: [
-            block('looks_hide')
-          ]
-        })
+        block('motion_sety', { inputs: { Y: number(rowY()) } })
       ],
       [
         block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: WIN_BROADCAST } }),
+        block('looks_hide')
+      ],
+      [
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: LOSE_BROADCAST } }),
         block('looks_hide')
       ]
     ),

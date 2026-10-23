@@ -1,5 +1,5 @@
 import { number, text, variable, message, condition, block, buildBlocks } from '../blocks.js';
-import { GUESS_LIST, ROW_VARIABLE, NEXT_ROW_BROADCAST, SCORE_BROADCAST, WIN_BROADCAST, PLAYING_VARIABLE, BLACK_VARIABLE, guessLength, buttonCostume } from '../shared.js';
+import { GUESS_LIST, ROW_VARIABLE, NEXT_ROW_BROADCAST, SCORE_BROADCAST, WIN_BROADCAST, LOSE_BROADCAST, PLAYING_VARIABLE, BLACK_VARIABLE, guessLength, row, buttonCostume } from '../shared.js';
 
 export function checkSprite() {
   return {
@@ -36,8 +36,17 @@ export function checkSprite() {
                 block('event_broadcast', { inputs: { BROADCAST_INPUT: message(WIN_BROADCAST) } })
               ],
               substack2: [
-                block('data_changevariableby', { inputs: { VALUE: number(1) }, fields: { VARIABLE: ROW_VARIABLE } }),
-                block('event_broadcast', { inputs: { BROADCAST_INPUT: message(NEXT_ROW_BROADCAST) } })
+                block('control_if_else', {
+                  inputs: { CONDITION: condition(block('operator_equals', { inputs: { OPERAND1: text(row()), OPERAND2: text(10) } })) },
+                  substack: [
+                    block('data_setvariableto', { inputs: { VALUE: text(0) }, fields: { VARIABLE: PLAYING_VARIABLE } }),
+                    block('event_broadcast', { inputs: { BROADCAST_INPUT: message(LOSE_BROADCAST) } })
+                  ],
+                  substack2: [
+                    block('data_changevariableby', { inputs: { VALUE: number(1) }, fields: { VARIABLE: ROW_VARIABLE } }),
+                    block('event_broadcast', { inputs: { BROADCAST_INPUT: message(NEXT_ROW_BROADCAST) } })
+                  ]
+                })
               ]
             })
           ]

@@ -7,6 +7,7 @@ export const NEXT_ROW_BROADCAST = ['next row', 'next-row-broadcast'];
 export const UNDO_BROADCAST = ['undo', 'undo-broadcast'];
 export const SCORE_BROADCAST = ['score', 'score-broadcast'];
 export const WIN_BROADCAST = ['win', 'win-broadcast'];
+export const LOSE_BROADCAST = ['lose', 'lose-broadcast'];
 export const PLAYING_VARIABLE = ['playing', 'playing-variable'];
 export const BLACK_VARIABLE = ['black', 'black-variable'];
 export const WHITE_VARIABLE = ['white', 'white-variable'];
