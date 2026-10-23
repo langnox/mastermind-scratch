@@ -52,8 +52,8 @@ export function holeSprite() {
     ),
     currentCostume: 0,
     costumes: [
-      circleCostume('large', 22, '#5f5e5a'),
-      circleCostume('small', 8, '#5f5e5a')
+      circleCostume('large', 22, '#b4b2a9'),
+      circleCostume('small', 8, '#b4b2a9')
     ],
     sounds: [], volume: 100, layerOrder: 1, visible: false, x: 0, y: 0, size: 100, direction: 90, draggable: false, rotationStyle: 'all around'
   };
