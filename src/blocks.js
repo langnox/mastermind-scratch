@@ -31,14 +31,18 @@ export function cloneOf(target) {
   return [1, block('control_create_clone_of_menu', { fields: { CLONE_OPTION: [target, null] }, shadow: true })];
 }
 
-export function defineProcedure(proccode) {
-  const mutation = { tagName: 'mutation', children: [], proccode, argumentids: '[]', argumentnames: '[]', argumentdefaults: '[]', warp: 'true' };
+export function defineProcedure(proccode, { warp = true } = {}) {
+  const mutation = { tagName: 'mutation', children: [], proccode, argumentids: '[]', argumentnames: '[]', argumentdefaults: '[]', warp: String(warp) };
   return block('procedures_definition', { inputs: { custom_block: [1, block('procedures_prototype', { shadow: true, mutation })] } });
 }
 
-export function callProcedure(proccode) {
-  const mutation = { tagName: 'mutation', children: [], proccode, argumentids: '[]', warp: 'true' };
+export function callProcedure(proccode, { warp = true } = {}) {
+  const mutation = { tagName: 'mutation', children: [], proccode, argumentids: '[]', warp: String(warp) };
   return block('procedures_call', { mutation });
+}
+
+export function whenKeyPressed(key) {
+  return block('event_whenkeypressed', { fields: { KEY_OPTION: [key, null] } });
 }
 
 export function block(opcode, { inputs = {}, fields = {}, substack, substack2, shadow = false, mutation } = {}) {
