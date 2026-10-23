@@ -1,8 +1,9 @@
 import { number, text, variable, condition, costume, cloneOf, defineProcedure, callProcedure, whenKeyPressed, block, buildBlocks, svgCostume } from '../blocks.js';
-import { GUESS_LIST, NEW_GAME_BROADCAST, CONFIRM_NEW_GAME_BROADCAST, CANCEL_NEW_GAME_BROADCAST, PLAYING_VARIABLE, guessLength, notConfirming, PEG_COLOURS } from '../shared.js';
+import { GUESS_LIST, NEW_GAME_BROADCAST, CONFIRM_NEW_GAME_BROADCAST, CANCEL_NEW_GAME_BROADCAST, PLAYING_VARIABLE, guessLength, notConfirming, pressedAtVariable, markPressed, sizeCue, PEG_COLOURS } from '../shared.js';
 
 export function paletteSprite() {
   const PALETTE_IS_CLONE_VARIABLE = ['is clone', 'palette-is-clone-variable'];
+  const PALETTE_PRESSED_AT = pressedAtVariable('palette');
 
   function paletteCostumes() {
     return PEG_COLOURS.map(({ name, fill }) => {
@@ -14,7 +15,8 @@ export function paletteSprite() {
   return {
     isStage: false, name: 'Palette', lists: {}, broadcasts: {}, comments: {},
     variables: {
-      [PALETTE_IS_CLONE_VARIABLE[1]]: [PALETTE_IS_CLONE_VARIABLE[0], 0]
+      [PALETTE_IS_CLONE_VARIABLE[1]]: [PALETTE_IS_CLONE_VARIABLE[0], 0],
+      [PALETTE_PRESSED_AT[1]]: [PALETTE_PRESSED_AT[0], 0]
     },
     blocks: buildBlocks(
       [
@@ -39,7 +41,8 @@ export function paletteSprite() {
       [
         block('control_start_as_clone'),
         block('data_setvariableto', { inputs: { VALUE: text(1) }, fields: { VARIABLE: PALETTE_IS_CLONE_VARIABLE } }),
-        block('looks_show')
+        block('looks_show'),
+        block('control_forever', { substack: [sizeCue(PALETTE_PRESSED_AT)] })
       ],
       [
         block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: CONFIRM_NEW_GAME_BROADCAST } }),
@@ -93,6 +96,7 @@ export function paletteSprite() {
             }))
           },
           substack: [
+            markPressed(PALETTE_PRESSED_AT),
             block('data_addtolist', {
               inputs: { ITEM: text(block('looks_costumenumbername', { fields: { NUMBER_NAME: ['number', null] } })) },
               fields: { LIST: GUESS_LIST }
