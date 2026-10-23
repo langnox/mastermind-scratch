@@ -1,5 +1,5 @@
 import { number, text, variable, condition, costume, cloneOf, defineProcedure, callProcedure, whenKeyPressed, block, buildBlocks, svgCostume } from '../blocks.js';
-import { GUESS_LIST, PLAYING_VARIABLE, guessLength, PEG_COLOURS } from '../shared.js';
+import { GUESS_LIST, NEW_GAME_BROADCAST, PLAYING_VARIABLE, guessLength, PEG_COLOURS } from '../shared.js';
 
 export function paletteSprite() {
   const PALETTE_IS_CLONE_VARIABLE = ['is clone', 'palette-is-clone-variable'];
@@ -18,7 +18,8 @@ export function paletteSprite() {
     },
     blocks: buildBlocks(
       [
-        block('event_whenflagclicked'),
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST } }),
+        block('control_delete_this_clone'),
         block('looks_hide'),
         callProcedure('show palette')
       ],

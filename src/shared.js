@@ -5,6 +5,7 @@ export const GUESS_LIST = ['guess', 'guess-list'];
 export const ROW_VARIABLE = ['row', 'row-variable'];
 export const NEXT_ROW_BROADCAST = ['next row', 'next-row-broadcast'];
 export const UNDO_BROADCAST = ['undo', 'undo-broadcast'];
+export const NEW_GAME_BROADCAST = ['new game', 'new-game-broadcast'];
 export const SCORE_BROADCAST = ['score', 'score-broadcast'];
 export const WIN_BROADCAST = ['win', 'win-broadcast'];
 export const LOSE_BROADCAST = ['lose', 'lose-broadcast'];

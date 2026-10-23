@@ -1,5 +1,5 @@
 import { number, costume, block, buildBlocks, svgCostume } from '../blocks.js';
-import { WIN_BROADCAST, LOSE_BROADCAST } from '../shared.js';
+import { NEW_GAME_BROADCAST, WIN_BROADCAST, LOSE_BROADCAST } from '../shared.js';
 
 export function bannerSprite() {
   function bannerCostume(name, label, fill) {
@@ -11,7 +11,7 @@ export function bannerSprite() {
     isStage: false, name: 'Banner', variables: {}, lists: {}, broadcasts: {}, comments: {},
     blocks: buildBlocks(
       [
-        block('event_whenflagclicked'),
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST } }),
         block('looks_hide'),
         block('motion_gotoxy', { inputs: { X: number(165), Y: number(0) } })
       ],

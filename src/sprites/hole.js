@@ -1,11 +1,13 @@
 import { number, costume, cloneOf, defineProcedure, callProcedure, block, buildBlocks, circleCostume } from '../blocks.js';
+import { NEW_GAME_BROADCAST } from '../shared.js';
 
 export function holeSprite() {
   return {
     isStage: false, name: 'Hole', variables: {}, lists: {}, broadcasts: {}, comments: {},
     blocks: buildBlocks(
       [
-        block('event_whenflagclicked'),
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST } }),
+        block('control_delete_this_clone'),
         block('looks_hide'),
         callProcedure('draw board')
       ],

@@ -1,12 +1,12 @@
 import { number, text, variable, message, condition, defineProcedure, callProcedure, whenKeyPressed, block, buildBlocks } from '../blocks.js';
-import { GUESS_LIST, ROW_VARIABLE, NEXT_ROW_BROADCAST, SCORE_BROADCAST, WIN_BROADCAST, LOSE_BROADCAST, PLAYING_VARIABLE, BLACK_VARIABLE, guessLength, row, buttonCostume } from '../shared.js';
+import { GUESS_LIST, ROW_VARIABLE, NEXT_ROW_BROADCAST, NEW_GAME_BROADCAST, SCORE_BROADCAST, WIN_BROADCAST, LOSE_BROADCAST, PLAYING_VARIABLE, BLACK_VARIABLE, guessLength, row, buttonCostume } from '../shared.js';
 
 export function checkSprite() {
   return {
     isStage: false, name: 'Check', variables: {}, lists: {}, broadcasts: {}, comments: {},
     blocks: buildBlocks(
       [
-        block('event_whenflagclicked'),
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST } }),
         block('motion_gotoxy', { inputs: { X: number(160), Y: number(-160) } }),
         block('control_forever', {
           substack: [

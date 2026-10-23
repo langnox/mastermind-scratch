@@ -1,12 +1,12 @@
 import { number, text, message, condition, defineProcedure, callProcedure, whenKeyPressed, block, buildBlocks } from '../blocks.js';
-import { GUESS_LIST, UNDO_BROADCAST, guessLength, buttonCostume } from '../shared.js';
+import { GUESS_LIST, UNDO_BROADCAST, NEW_GAME_BROADCAST, guessLength, buttonCostume } from '../shared.js';
 
 export function undoSprite() {
   return {
     isStage: false, name: 'Undo', variables: {}, lists: {}, broadcasts: {}, comments: {},
     blocks: buildBlocks(
       [
-        block('event_whenflagclicked'),
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST } }),
         block('motion_gotoxy', { inputs: { X: number(160), Y: number(-128) } }),
         block('control_forever', {
           substack: [

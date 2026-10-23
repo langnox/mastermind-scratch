@@ -1,5 +1,5 @@
 import { number, text, condition, costume, block, buildBlocks } from '../blocks.js';
-import { GUESS_LIST, UNDO_BROADCAST, guessLength, row, rowY, pegCostumes } from '../shared.js';
+import { GUESS_LIST, UNDO_BROADCAST, NEW_GAME_BROADCAST, guessLength, row, rowY, pegCostumes } from '../shared.js';
 
 export function guessSprite() {
   const MY_INDEX_VARIABLE = ['my index', 'my-index-variable'];
@@ -21,7 +21,8 @@ export function guessSprite() {
     },
     blocks: buildBlocks(
       [
-        block('event_whenflagclicked'),
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST } }),
+        block('control_delete_this_clone'),
         block('looks_hide')
       ],
       [

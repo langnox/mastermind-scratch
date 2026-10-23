@@ -1,12 +1,12 @@
 import { number, block, buildBlocks, svgCostume } from '../blocks.js';
-import { NEXT_ROW_BROADCAST, WIN_BROADCAST, LOSE_BROADCAST, rowY } from '../shared.js';
+import { NEXT_ROW_BROADCAST, NEW_GAME_BROADCAST, WIN_BROADCAST, LOSE_BROADCAST, rowY } from '../shared.js';
 
 export function markerSprite() {
   return {
     isStage: false, name: 'Marker', variables: {}, lists: {}, broadcasts: {}, comments: {},
     blocks: buildBlocks(
       [
-        block('event_whenflagclicked'),
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST } }),
         block('motion_gotoxy', { inputs: { X: number(-92), Y: number(-160) } }),
         block('looks_show')
       ],

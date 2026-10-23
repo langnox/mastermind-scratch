@@ -1,5 +1,5 @@
 import { number, text, costume, cloneOf, defineProcedure, callProcedure, block, buildBlocks } from '../blocks.js';
-import { CODE_LIST, pegCostumes } from '../shared.js';
+import { CODE_LIST, NEW_GAME_BROADCAST, pegCostumes } from '../shared.js';
 
 export function pegSprite() {
   const PEG_VARIABLE = ['peg', 'peg-variable'];
@@ -11,7 +11,8 @@ export function pegSprite() {
     },
     blocks: buildBlocks(
       [
-        block('event_whenflagclicked'),
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST } }),
+        block('control_delete_this_clone'),
         block('looks_hide'),
         callProcedure('pick code')
       ],

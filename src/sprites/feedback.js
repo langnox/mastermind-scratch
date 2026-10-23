@@ -1,5 +1,5 @@
 import { number, text, variable, itemOf, condition, costume, cloneOf, defineProcedure, callProcedure, block, buildBlocks, circleCostume } from '../blocks.js';
-import { CODE_LIST, GUESS_LIST, SCORE_BROADCAST, BLACK_VARIABLE, WHITE_VARIABLE, rowY } from '../shared.js';
+import { CODE_LIST, GUESS_LIST, NEW_GAME_BROADCAST, SCORE_BROADCAST, BLACK_VARIABLE, WHITE_VARIABLE, rowY } from '../shared.js';
 
 export function feedbackSprite() {
   const INDEX_VARIABLE = ['i', 'i-variable'];
@@ -19,7 +19,8 @@ export function feedbackSprite() {
     },
     blocks: buildBlocks(
       [
-        block('event_whenflagclicked'),
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST } }),
+        block('control_delete_this_clone'),
         block('looks_hide')
       ],
       [
