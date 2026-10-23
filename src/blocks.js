@@ -2,8 +2,8 @@ export function number(value) {
   return [1, [4, String(value)]];
 }
 
-export function text(value) {
-  return [1, [10, value]];
+export function color(value) {
+  return [1, [9, value]];
 }
 
 export function block(opcode, { inputs = {}, fields = {}, substack } = {}) {
