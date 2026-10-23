@@ -1,5 +1,5 @@
 import { number, text, message, condition, defineProcedure, callProcedure, whenKeyPressed, block, buildBlocks } from '../blocks.js';
-import { GUESS_LIST, UNDO_BROADCAST, NEW_GAME_BROADCAST, guessLength, notConfirming, buttonCostume } from '../shared.js';
+import { GUESS_LIST, UNDO_BROADCAST, NEW_GAME_BROADCAST, PLACED_VARIABLE, guessLength, notConfirming, buttonCostume } from '../shared.js';
 
 export function undoSprite() {
   return {
@@ -50,6 +50,7 @@ export function undoSprite() {
           },
           substack: [
             block('data_deleteoflist', { inputs: { INDEX: number(guessLength()) }, fields: { LIST: GUESS_LIST } }),
+            block('data_changevariableby', { inputs: { VALUE: number(-1) }, fields: { VARIABLE: PLACED_VARIABLE } }),
             block('event_broadcast', { inputs: { BROADCAST_INPUT: message(UNDO_BROADCAST) } })
           ]
         })

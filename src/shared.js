@@ -13,6 +13,7 @@ export const WIN_BROADCAST = ['win', 'win-broadcast'];
 export const LOSE_BROADCAST = ['lose', 'lose-broadcast'];
 export const PLAYING_VARIABLE = ['playing', 'playing-variable'];
 export const CONFIRMING_VARIABLE = ['confirming', 'confirming-variable'];
+export const PLACED_VARIABLE = ['placed', 'placed-variable'];
 export const BLACK_VARIABLE = ['black', 'black-variable'];
 export const WHITE_VARIABLE = ['white', 'white-variable'];
 

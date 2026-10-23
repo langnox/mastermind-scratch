@@ -1,5 +1,5 @@
-import { number, text, condition, costume, block, buildBlocks } from '../blocks.js';
-import { GUESS_LIST, UNDO_BROADCAST, NEW_GAME_BROADCAST, guessLength, row, rowY, pegCostumes } from '../shared.js';
+import { number, text, variable, condition, costume, block, buildBlocks } from '../blocks.js';
+import { GUESS_LIST, UNDO_BROADCAST, NEW_GAME_BROADCAST, PLACED_VARIABLE, guessLength, row, rowY, pegCostumes } from '../shared.js';
 
 export function guessSprite() {
   const MY_INDEX_VARIABLE = ['my index', 'my-index-variable'];
@@ -27,7 +27,8 @@ export function guessSprite() {
       ],
       [
         block('control_start_as_clone'),
-        block('data_setvariableto', { inputs: { VALUE: text(guessLength()) }, fields: { VARIABLE: MY_INDEX_VARIABLE } }),
+        block('data_changevariableby', { inputs: { VALUE: number(1) }, fields: { VARIABLE: PLACED_VARIABLE } }),
+        block('data_setvariableto', { inputs: { VALUE: text(variable(PLACED_VARIABLE)) }, fields: { VARIABLE: MY_INDEX_VARIABLE } }),
         block('data_setvariableto', { inputs: { VALUE: text(row()) }, fields: { VARIABLE: MY_ROW_VARIABLE } }),
         block('looks_switchcostumeto', {
           inputs: { COSTUME: costume(block('data_itemoflist', { inputs: { INDEX: number(myIndex()) }, fields: { LIST: GUESS_LIST } })) }
