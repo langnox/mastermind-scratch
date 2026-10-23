@@ -1,9 +1,9 @@
-import { text, message, block, buildBlocks, svgCostume } from '../blocks.js';
+import { text, message, block, buildScripts, svgCostume } from '../blocks.js';
 import { CODE_LIST, GUESS_LIST, ROW_VARIABLE, NEXT_ROW_BROADCAST, UNDO_BROADCAST, NEW_GAME_BROADCAST, CONFIRM_NEW_GAME_BROADCAST, CANCEL_NEW_GAME_BROADCAST, SCORE_BROADCAST, WIN_BROADCAST, LOSE_BROADCAST, PLAYING_VARIABLE, CONFIRMING_VARIABLE, PLACED_VARIABLE, BLACK_VARIABLE, WHITE_VARIABLE } from '../shared.js';
 
 export function stageTarget() {
   return {
-    isStage: true, name: 'Stage', comments: {},
+    isStage: true, name: 'Stage',
     broadcasts: {
       [NEXT_ROW_BROADCAST[1]]: NEXT_ROW_BROADCAST[0],
       [UNDO_BROADCAST[1]]: UNDO_BROADCAST[0],
@@ -26,7 +26,7 @@ export function stageTarget() {
       [CODE_LIST[1]]: [CODE_LIST[0], []],
       [GUESS_LIST[1]]: [GUESS_LIST[0], []]
     },
-    blocks: buildBlocks(
+    ...buildScripts(
       [
         block('event_whenflagclicked'),
         block('event_broadcast', { inputs: { BROADCAST_INPUT: message(NEW_GAME_BROADCAST) } })

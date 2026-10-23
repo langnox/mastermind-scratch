@@ -1,10 +1,10 @@
-import { number, costume, cloneOf, defineProcedure, callProcedure, block, buildBlocks, circleCostume } from '../blocks.js';
+import { number, costume, cloneOf, defineProcedure, callProcedure, block, buildScripts, circleCostume } from '../blocks.js';
 import { NEW_GAME_BROADCAST } from '../shared.js';
 
 export function holeSprite() {
   return {
-    isStage: false, name: 'Hole', variables: {}, lists: {}, broadcasts: {}, comments: {},
-    blocks: buildBlocks(
+    isStage: false, name: 'Hole', variables: {}, lists: {}, broadcasts: {},
+    ...buildScripts(
       [
         block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST } }),
         block('control_delete_this_clone'),

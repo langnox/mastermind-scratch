@@ -1,4 +1,4 @@
-import { block, buildBlocks, svgCostume } from '../blocks.js';
+import { block, buildScripts, svgCostume } from '../blocks.js';
 import { NEW_GAME_BROADCAST, PEG_COLOURS } from '../shared.js';
 
 export function thumbnailSprite() {
@@ -48,8 +48,8 @@ export function thumbnailSprite() {
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="480" height="360"><rect width="480" height="360" fill="#f4f1ea"/><g transform="scale(3)">${rows}</g></svg>`;
 
   return {
-    isStage: false, name: 'Thumbnail', variables: {}, lists: {}, broadcasts: {}, comments: {},
-    blocks: buildBlocks(
+    isStage: false, name: 'Thumbnail', variables: {}, lists: {}, broadcasts: {},
+    ...buildScripts(
       [
         block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST } }),
         block('looks_hide')

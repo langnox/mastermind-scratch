@@ -1,15 +1,15 @@
-import { number, text, message, condition, defineProcedure, callProcedure, whenKeyPressed, block, buildBlocks } from '../blocks.js';
+import { number, text, message, condition, defineProcedure, callProcedure, whenKeyPressed, block, buildScripts } from '../blocks.js';
 import { GUESS_LIST, UNDO_BROADCAST, NEW_GAME_BROADCAST, PLACED_VARIABLE, guessLength, notConfirming, pressedAtVariable, markPressed, sizeCue, buttonCostume } from '../shared.js';
 
 export function undoSprite() {
   const UNDO_PRESSED_AT = pressedAtVariable('undo');
 
   return {
-    isStage: false, name: 'Undo', lists: {}, broadcasts: {}, comments: {},
+    isStage: false, name: 'Undo', lists: {}, broadcasts: {},
     variables: {
       [UNDO_PRESSED_AT[1]]: [UNDO_PRESSED_AT[0], 0]
     },
-    blocks: buildBlocks(
+    ...buildScripts(
       [
         block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST } }),
         block('motion_gotoxy', { inputs: { X: number(160), Y: number(-128) } }),

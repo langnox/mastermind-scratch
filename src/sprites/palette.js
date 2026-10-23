@@ -1,4 +1,4 @@
-import { number, text, variable, condition, costume, cloneOf, defineProcedure, callProcedure, whenKeyPressed, block, buildBlocks, svgCostume } from '../blocks.js';
+import { number, text, variable, condition, costume, cloneOf, defineProcedure, callProcedure, whenKeyPressed, block, buildScripts, svgCostume } from '../blocks.js';
 import { GUESS_LIST, NEW_GAME_BROADCAST, CONFIRM_NEW_GAME_BROADCAST, CANCEL_NEW_GAME_BROADCAST, PLAYING_VARIABLE, guessLength, notConfirming, pressedAtVariable, markPressed, sizeCue, PEG_COLOURS } from '../shared.js';
 
 export function paletteSprite() {
@@ -13,12 +13,12 @@ export function paletteSprite() {
   }
 
   return {
-    isStage: false, name: 'Palette', lists: {}, broadcasts: {}, comments: {},
+    isStage: false, name: 'Palette', lists: {}, broadcasts: {},
     variables: {
       [PALETTE_IS_CLONE_VARIABLE[1]]: [PALETTE_IS_CLONE_VARIABLE[0], 0],
       [PALETTE_PRESSED_AT[1]]: [PALETTE_PRESSED_AT[0], 0]
     },
-    blocks: buildBlocks(
+    ...buildScripts(
       [
         block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST } }),
         block('control_delete_this_clone'),

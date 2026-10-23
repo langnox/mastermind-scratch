@@ -1,4 +1,4 @@
-import { number, text, variable, condition, costume, block, buildBlocks } from '../blocks.js';
+import { number, text, variable, condition, costume, block, buildScripts } from '../blocks.js';
 import { GUESS_LIST, UNDO_BROADCAST, NEW_GAME_BROADCAST, PLACED_VARIABLE, guessLength, row, rowY, pegCostumes } from '../shared.js';
 
 export function guessSprite() {
@@ -14,12 +14,12 @@ export function guessSprite() {
   }
 
   return {
-    isStage: false, name: 'Guess', lists: {}, broadcasts: {}, comments: {},
+    isStage: false, name: 'Guess', lists: {}, broadcasts: {},
     variables: {
       [MY_INDEX_VARIABLE[1]]: [MY_INDEX_VARIABLE[0], 0],
       [MY_ROW_VARIABLE[1]]: [MY_ROW_VARIABLE[0], 0]
     },
-    blocks: buildBlocks(
+    ...buildScripts(
       [
         block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST } }),
         block('control_delete_this_clone'),

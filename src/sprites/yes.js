@@ -1,15 +1,15 @@
-import { number, message, block, buildBlocks } from '../blocks.js';
+import { number, message, block, buildScripts } from '../blocks.js';
 import { NEW_GAME_BROADCAST, CONFIRM_NEW_GAME_BROADCAST, CANCEL_NEW_GAME_BROADCAST, pressedAtVariable, markPressed, sizeCue, buttonCostume } from '../shared.js';
 
 export function yesSprite() {
   const YES_PRESSED_AT = pressedAtVariable('yes');
 
   return {
-    isStage: false, name: 'Yes', lists: {}, broadcasts: {}, comments: {},
+    isStage: false, name: 'Yes', lists: {}, broadcasts: {},
     variables: {
       [YES_PRESSED_AT[1]]: [YES_PRESSED_AT[0], 0]
     },
-    blocks: buildBlocks(
+    ...buildScripts(
       [
         block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST } }),
         block('looks_hide'),

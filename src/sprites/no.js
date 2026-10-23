@@ -1,15 +1,15 @@
-import { number, message, block, buildBlocks } from '../blocks.js';
+import { number, message, block, buildScripts } from '../blocks.js';
 import { NEW_GAME_BROADCAST, CONFIRM_NEW_GAME_BROADCAST, CANCEL_NEW_GAME_BROADCAST, pressedAtVariable, markPressed, sizeCue, buttonCostume } from '../shared.js';
 
 export function noSprite() {
   const NO_PRESSED_AT = pressedAtVariable('no');
 
   return {
-    isStage: false, name: 'No', lists: {}, broadcasts: {}, comments: {},
+    isStage: false, name: 'No', lists: {}, broadcasts: {},
     variables: {
       [NO_PRESSED_AT[1]]: [NO_PRESSED_AT[0], 0]
     },
-    blocks: buildBlocks(
+    ...buildScripts(
       [
         block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST } }),
         block('looks_hide'),

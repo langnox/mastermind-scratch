@@ -1,4 +1,4 @@
-import { number, text, variable, itemOf, condition, costume, cloneOf, defineProcedure, callProcedure, block, buildBlocks, circleCostume } from '../blocks.js';
+import { number, text, variable, itemOf, condition, costume, cloneOf, defineProcedure, callProcedure, block, buildScripts, circleCostume } from '../blocks.js';
 import { CODE_LIST, GUESS_LIST, NEW_GAME_BROADCAST, SCORE_BROADCAST, BLACK_VARIABLE, WHITE_VARIABLE, rowY } from '../shared.js';
 
 export function feedbackSprite() {
@@ -8,7 +8,7 @@ export function feedbackSprite() {
   const GUESS_LEFT_LIST = ['guess left', 'guess-left-list'];
 
   return {
-    isStage: false, name: 'Feedback', broadcasts: {}, comments: {},
+    isStage: false, name: 'Feedback', broadcasts: {},
     variables: {
       [INDEX_VARIABLE[1]]: [INDEX_VARIABLE[0], 0],
       [IS_CLONE_VARIABLE[1]]: [IS_CLONE_VARIABLE[0], 0]
@@ -17,7 +17,7 @@ export function feedbackSprite() {
       [CODE_LEFT_LIST[1]]: [CODE_LEFT_LIST[0], []],
       [GUESS_LEFT_LIST[1]]: [GUESS_LEFT_LIST[0], []]
     },
-    blocks: buildBlocks(
+    ...buildScripts(
       [
         block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST } }),
         block('control_delete_this_clone'),

@@ -1,12 +1,12 @@
-import { number, block, buildBlocks, svgCostume } from '../blocks.js';
+import { number, block, buildScripts, svgCostume } from '../blocks.js';
 import { NEW_GAME_BROADCAST, WIN_BROADCAST, LOSE_BROADCAST } from '../shared.js';
 
 export function coverSprite() {
   const marks = [16, 48, 80, 112].map(x => `<text x="${x}" y="21" font-family="Sans Serif" font-size="16" fill="#ffffff" text-anchor="middle">?</text>`).join('');
 
   return {
-    isStage: false, name: 'Cover', variables: {}, lists: {}, broadcasts: {}, comments: {},
-    blocks: buildBlocks(
+    isStage: false, name: 'Cover', variables: {}, lists: {}, broadcasts: {},
+    ...buildScripts(
       [
         block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST } }),
         block('motion_gotoxy', { inputs: { X: number(-16), Y: number(164) } }),

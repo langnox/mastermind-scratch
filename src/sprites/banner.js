@@ -1,4 +1,4 @@
-import { number, costume, block, buildBlocks, svgCostume } from '../blocks.js';
+import { number, costume, block, buildScripts, svgCostume } from '../blocks.js';
 import { NEW_GAME_BROADCAST, CONFIRM_NEW_GAME_BROADCAST, CANCEL_NEW_GAME_BROADCAST, WIN_BROADCAST, LOSE_BROADCAST } from '../shared.js';
 
 export function bannerSprite() {
@@ -8,8 +8,8 @@ export function bannerSprite() {
   }
 
   return {
-    isStage: false, name: 'Banner', variables: {}, lists: {}, broadcasts: {}, comments: {},
-    blocks: buildBlocks(
+    isStage: false, name: 'Banner', variables: {}, lists: {}, broadcasts: {},
+    ...buildScripts(
       [
         block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST } }),
         block('looks_hide'),

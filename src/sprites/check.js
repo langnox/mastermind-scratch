@@ -1,15 +1,15 @@
-import { number, text, variable, message, condition, defineProcedure, callProcedure, whenKeyPressed, block, buildBlocks } from '../blocks.js';
+import { number, text, variable, message, condition, defineProcedure, callProcedure, whenKeyPressed, block, buildScripts } from '../blocks.js';
 import { GUESS_LIST, ROW_VARIABLE, NEXT_ROW_BROADCAST, NEW_GAME_BROADCAST, SCORE_BROADCAST, WIN_BROADCAST, LOSE_BROADCAST, PLAYING_VARIABLE, PLACED_VARIABLE, BLACK_VARIABLE, guessLength, row, notConfirming, pressedAtVariable, markPressed, sizeCue, buttonCostume } from '../shared.js';
 
 export function checkSprite() {
   const CHECK_PRESSED_AT = pressedAtVariable('check');
 
   return {
-    isStage: false, name: 'Check', lists: {}, broadcasts: {}, comments: {},
+    isStage: false, name: 'Check', lists: {}, broadcasts: {},
     variables: {
       [CHECK_PRESSED_AT[1]]: [CHECK_PRESSED_AT[0], 0]
     },
-    blocks: buildBlocks(
+    ...buildScripts(
       [
         block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST } }),
         block('motion_gotoxy', { inputs: { X: number(160), Y: number(-160) } }),

@@ -1,15 +1,15 @@
-import { number, text, costume, cloneOf, defineProcedure, callProcedure, block, buildBlocks } from '../blocks.js';
+import { number, text, costume, cloneOf, defineProcedure, callProcedure, block, buildScripts } from '../blocks.js';
 import { CODE_LIST, NEW_GAME_BROADCAST, pegCostumes } from '../shared.js';
 
 export function pegSprite() {
   const PEG_VARIABLE = ['peg', 'peg-variable'];
 
   return {
-    isStage: false, name: 'Peg', lists: {}, broadcasts: {}, comments: {},
+    isStage: false, name: 'Peg', lists: {}, broadcasts: {},
     variables: {
       [PEG_VARIABLE[1]]: [PEG_VARIABLE[0], 0]
     },
-    blocks: buildBlocks(
+    ...buildScripts(
       [
         block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST } }),
         block('control_delete_this_clone'),

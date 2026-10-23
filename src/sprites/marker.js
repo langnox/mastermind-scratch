@@ -1,10 +1,10 @@
-import { number, block, buildBlocks, svgCostume } from '../blocks.js';
+import { number, block, buildScripts, svgCostume } from '../blocks.js';
 import { NEXT_ROW_BROADCAST, NEW_GAME_BROADCAST, WIN_BROADCAST, LOSE_BROADCAST, rowY } from '../shared.js';
 
 export function markerSprite() {
   return {
-    isStage: false, name: 'Marker', variables: {}, lists: {}, broadcasts: {}, comments: {},
-    blocks: buildBlocks(
+    isStage: false, name: 'Marker', variables: {}, lists: {}, broadcasts: {},
+    ...buildScripts(
       [
         block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST } }),
         block('motion_gotoxy', { inputs: { X: number(-92), Y: number(-160) } }),

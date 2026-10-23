@@ -37,9 +37,9 @@ export function cloneOf(target) {
   return [1, block('control_create_clone_of_menu', { fields: { CLONE_OPTION: [target, null] }, shadow: true })];
 }
 
-export function defineProcedure(proccode, { warp = true } = {}) {
+export function defineProcedure(proccode, { warp = true, comment } = {}) {
   const mutation = { tagName: 'mutation', children: [], proccode, argumentids: '[]', argumentnames: '[]', argumentdefaults: '[]', warp: String(warp) };
-  return block('procedures_definition', { inputs: { custom_block: [1, block('procedures_prototype', { shadow: true, mutation })] } });
+  return block('procedures_definition', { inputs: { custom_block: [1, block('procedures_prototype', { shadow: true, mutation })] }, comment });
 }
 
 export function callProcedure(proccode, { warp = true } = {}) {
@@ -47,25 +47,33 @@ export function callProcedure(proccode, { warp = true } = {}) {
   return block('procedures_call', { mutation });
 }
 
-export function whenKeyPressed(key) {
-  return block('event_whenkeypressed', { fields: { KEY_OPTION: [key, null] } });
+export function whenKeyPressed(key, { comment } = {}) {
+  return block('event_whenkeypressed', { fields: { KEY_OPTION: [key, null] }, comment });
 }
 
-export function block(opcode, { inputs = {}, fields = {}, substack, substack2, shadow = false, mutation } = {}) {
-  return { opcode, inputs, fields, substack, substack2, shadow, mutation };
+export function block(opcode, { inputs = {}, fields = {}, substack, substack2, shadow = false, mutation, comment } = {}) {
+  return { opcode, inputs, fields, substack, substack2, shadow, mutation, comment };
 }
 
 let nextId = 1;
 
-export function buildBlocks(...scripts) {
+let nextCommentId = 1;
+
+export function buildScripts(...scripts) {
   const blocks = {};
+  const comments = {};
 
   function addStack(stack, parentId) {
     let firstId = null;
     let previousId = null;
-    for (const { opcode, inputs, fields, substack, substack2, shadow, mutation } of stack) {
+    for (const { opcode, inputs, fields, substack, substack2, shadow, mutation, comment } of stack) {
       const id = String(nextId++);
       blocks[id] = { opcode, next: null, parent: previousId ?? parentId, inputs: {}, fields, shadow, topLevel: false, mutation };
+      if (comment) {
+        const commentId = `comment-${nextCommentId++}`;
+        blocks[id].comment = commentId;
+        comments[commentId] = { blockId: id, x: 0, y: 0, width: 250, height: 40 + 18 * Math.ceil(comment.length / 32), minimized: false, text: comment };
+      }
       for (const [name, [type, ...parts]] of Object.entries(inputs)) {
         blocks[id].inputs[name] = [type, ...parts.map(part => part.opcode ? addStack([part], id) : part)];
       }
@@ -88,8 +96,11 @@ export function buildBlocks(...scripts) {
   scripts.forEach((script, index) => {
     const id = addStack(script, null);
     Object.assign(blocks[id], { topLevel: true, x: 0, y: index * 200 });
+    if (blocks[id].comment) {
+      Object.assign(comments[blocks[id].comment], { x: 450, y: index * 200 });
+    }
   });
-  return blocks;
+  return { blocks, comments };
 }
 
 export const ASSETS = [];
