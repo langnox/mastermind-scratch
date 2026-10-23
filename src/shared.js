@@ -1,4 +1,4 @@
-import { number, text, variable, condition, touching, block, svgCostume, circleCostume } from './blocks.js';
+import { number, text, variable, condition, touching, block, svgCostume, roundedRect, centredText, circleCostume } from './blocks.js';
 
 export const CODE_LIST = ['code', 'code-list'];
 export const GUESS_LIST = ['guess', 'guess-list'];
@@ -78,7 +78,7 @@ export function rowY() {
 }
 
 export function buttonCostume(label, width = 64) {
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="26"><rect width="${width}" height="26" rx="6" fill="#5f5e5a"/><text x="${width / 2}" y="18" font-family="Sans Serif" font-size="14" fill="#ffffff" text-anchor="middle">${label}</text></svg>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="26">${roundedRect(width, 26, 6, '#5f5e5a')}${centredText(label, width / 2, 18, 14, '#ffffff')}</svg>`;
   return svgCostume('button', svg, width / 2, 13);
 }
 

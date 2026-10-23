@@ -1,4 +1,4 @@
-import { number, text, variable, condition, costume, cloneOf, defineProcedure, callProcedure, whenKeyPressed, block, buildScripts, svgCostume } from '../blocks.js';
+import { number, text, variable, condition, costume, cloneOf, defineProcedure, callProcedure, whenKeyPressed, block, buildScripts, svgCostume, centredText } from '../blocks.js';
 import { GUESS_LIST, NEW_GAME_BROADCAST, CONFIRM_NEW_GAME_BROADCAST, CANCEL_NEW_GAME_BROADCAST, PLAYING_VARIABLE, guessLength, notConfirming, pressedAtVariable, markPressed, sizeCue, PEG_COLOURS, isCloneVariable, deleteIfClone, forgetPressed } from '../shared.js';
 
 export function paletteSprite() {
@@ -7,7 +7,7 @@ export function paletteSprite() {
 
   function paletteCostumes() {
     return PEG_COLOURS.map(({ name, fill }) => {
-      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="44" height="22"><text x="6" y="16" font-family="Sans Serif" font-size="14" fill="#5f5e5a" text-anchor="middle">${name[0].toUpperCase()}</text><circle cx="33" cy="11" r="11" fill="${fill}"/></svg>`;
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="44" height="22">${centredText(name[0].toUpperCase(), 6, 16, 14, '#5f5e5a')}<circle cx="33" cy="11" r="11" fill="${fill}"/></svg>`;
       return svgCostume(name, svg, 33, 11);
     });
   }
