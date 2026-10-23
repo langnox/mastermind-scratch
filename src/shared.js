@@ -24,9 +24,9 @@ export function rowY() {
   return block('operator_add', { inputs: { NUM1: number(-192), NUM2: number(block('operator_multiply', { inputs: { NUM1: number(32), NUM2: number(row()) } })) } });
 }
 
-export function buttonCostume(label) {
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="26"><rect width="64" height="26" rx="6" fill="#5f5e5a"/><text x="32" y="18" font-family="Sans Serif" font-size="14" fill="#ffffff" text-anchor="middle">${label}</text></svg>`;
-  return svgCostume('button', svg, 32, 13);
+export function buttonCostume(label, width = 64) {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="26"><rect width="${width}" height="26" rx="6" fill="#5f5e5a"/><text x="${width / 2}" y="18" font-family="Sans Serif" font-size="14" fill="#ffffff" text-anchor="middle">${label}</text></svg>`;
+  return svgCostume('button', svg, width / 2, 13);
 }
 
 export const PEG_COLOURS = [
