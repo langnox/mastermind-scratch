@@ -1,4 +1,4 @@
-import { number, text, variable, block, svgCostume, circleCostume } from './blocks.js';
+import { number, text, variable, condition, touching, block, svgCostume, circleCostume } from './blocks.js';
 
 export const CODE_LIST = ['code', 'code-list'];
 export const GUESS_LIST = ['guess', 'guess-list'];
@@ -27,6 +27,40 @@ export function row() {
 
 export function notConfirming() {
   return block('operator_equals', { inputs: { OPERAND1: text(variable(CONFIRMING_VARIABLE)), OPERAND2: text(0) } });
+}
+
+export function pressedAtVariable(sprite) {
+  return ['pressed at', `${sprite}-pressed-at-variable`];
+}
+
+export function markPressed(pressedAt) {
+  return block('data_setvariableto', { inputs: { VALUE: text(block('sensing_dayssince2000')) }, fields: { VARIABLE: pressedAt } });
+}
+
+export function sizeCue(pressedAt) {
+  const secondsSincePressed = block('operator_multiply', {
+    inputs: {
+      NUM1: number(block('operator_subtract', { inputs: { NUM1: number(block('sensing_dayssince2000')), NUM2: number(variable(pressedAt)) } })),
+      NUM2: number(86400)
+    }
+  });
+  return block('control_if_else', {
+    inputs: { CONDITION: condition(block('operator_lt', { inputs: { OPERAND1: text(secondsSincePressed), OPERAND2: text(0.1) } })) },
+    substack: [
+      block('looks_setsizeto', { inputs: { SIZE: number(90) } })
+    ],
+    substack2: [
+      block('control_if_else', {
+        inputs: { CONDITION: condition(touching('_mouse_')) },
+        substack: [
+          block('looks_setsizeto', { inputs: { SIZE: number(110) } })
+        ],
+        substack2: [
+          block('looks_setsizeto', { inputs: { SIZE: number(100) } })
+        ]
+      })
+    ]
+  });
 }
 
 export function rowY() {

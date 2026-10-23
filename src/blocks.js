@@ -27,6 +27,12 @@ export function costume(value) {
   return value.opcode ? [3, value, menu] : [1, menu];
 }
 
+export function touching(target) {
+  return block('sensing_touchingobject', {
+    inputs: { TOUCHINGOBJECTMENU: [1, block('sensing_touchingobjectmenu', { fields: { TOUCHINGOBJECTMENU: [target, null] }, shadow: true })] }
+  });
+}
+
 export function cloneOf(target) {
   return [1, block('control_create_clone_of_menu', { fields: { CLONE_OPTION: [target, null] }, shadow: true })];
 }
