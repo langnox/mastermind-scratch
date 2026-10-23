@@ -1,11 +1,10 @@
 import { svgCostume } from '../blocks.js';
-import { COLOURS_LIST, CODE_LIST } from '../shared.js';
+import { CODE_LIST } from '../shared.js';
 
 export function stageTarget() {
   return {
     isStage: true, name: 'Stage', variables: {}, broadcasts: {}, blocks: {}, comments: {},
     lists: {
-      [COLOURS_LIST[1]]: [COLOURS_LIST[0], ['#e24b4a', '#f39c33', '#f2d43a', '#5ba84a', '#378add', '#7f77dd']],
       [CODE_LIST[1]]: [CODE_LIST[0], []]
     },
     currentCostume: 0,

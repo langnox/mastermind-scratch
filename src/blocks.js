@@ -6,10 +6,6 @@ export function text(value) {
   return value.opcode ? [3, value, [10, '']] : [1, [10, String(value)]];
 }
 
-export function color(value) {
-  return value.opcode ? [3, value, [9, '#000000']] : [1, [9, value]];
-}
-
 export function costume(value) {
   const menu = block('looks_costume', { fields: { COSTUME: [value.opcode ? '' : value, null] }, shadow: true });
   return value.opcode ? [3, value, menu] : [1, menu];
@@ -62,4 +58,10 @@ export function svgCostume(name, svg, rotationCenterX, rotationCenterY) {
   const assetId = String(ASSETS.length + 1).padStart(32, '0');
   ASSETS.push({ assetId, svg });
   return { name, dataFormat: 'svg', assetId, md5ext: assetId + '.svg', rotationCenterX, rotationCenterY };
+}
+
+export function circleCostume(name, diameter, fill) {
+  const radius = diameter / 2;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${diameter}" height="${diameter}"><circle cx="${radius}" cy="${radius}" r="${radius}" fill="${fill}"/></svg>`;
+  return svgCostume(name, svg, radius, radius);
 }
