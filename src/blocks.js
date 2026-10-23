@@ -65,9 +65,12 @@ export function buildBlocks(...scripts) {
 export const ASSETS = [];
 
 export function svgCostume(name, svg, rotationCenterX, rotationCenterY) {
-  const assetId = String(ASSETS.length + 1).padStart(32, '0');
-  ASSETS.push({ assetId, svg });
-  return { name, dataFormat: 'svg', assetId, md5ext: assetId + '.svg', rotationCenterX, rotationCenterY };
+  let asset = ASSETS.find(existing => existing.svg === svg);
+  if (!asset) {
+    asset = { assetId: String(ASSETS.length + 1).padStart(32, '0'), svg };
+    ASSETS.push(asset);
+  }
+  return { name, dataFormat: 'svg', assetId: asset.assetId, md5ext: asset.assetId + '.svg', rotationCenterX, rotationCenterY };
 }
 
 export function circleCostume(name, diameter, fill) {

@@ -4,6 +4,17 @@ import { CODE_LIST } from '../shared.js';
 export function pegSprite() {
   const PEG_VARIABLE = ['peg', 'peg-variable'];
 
+  function pegCostumes() {
+    return [
+      circleCostume('red', 22, '#e24b4a'),
+      circleCostume('orange', 22, '#f39c33'),
+      circleCostume('yellow', 22, '#f2d43a'),
+      circleCostume('green', 22, '#5ba84a'),
+      circleCostume('blue', 22, '#378add'),
+      circleCostume('purple', 22, '#7f77dd')
+    ];
+  }
+
   return {
     isStage: false, name: 'Peg', lists: {}, broadcasts: {}, comments: {},
     variables: {
@@ -44,14 +55,7 @@ export function pegSprite() {
       ]
     ),
     currentCostume: 0,
-    costumes: [
-      circleCostume('red', 22, '#e24b4a'),
-      circleCostume('orange', 22, '#f39c33'),
-      circleCostume('yellow', 22, '#f2d43a'),
-      circleCostume('green', 22, '#5ba84a'),
-      circleCostume('blue', 22, '#378add'),
-      circleCostume('purple', 22, '#7f77dd')
-    ],
+    costumes: pegCostumes(),
     sounds: [], volume: 100, layerOrder: 2, visible: false, x: 0, y: 0, size: 100, direction: 90, draggable: false, rotationStyle: 'all around'
   };
 }
