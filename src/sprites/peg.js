@@ -13,13 +13,13 @@ export function pegSprite() {
     },
     ...buildScripts(
       [
-        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST } }),
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST }, y: 0 }),
         deleteIfClone(IS_CLONE_VARIABLE),
         block('looks_hide'),
         callProcedure('pick code')
       ],
       [
-        defineProcedure('pick code', { comment: 'Picks four random colours, repeats allowed, into the ‘code’ list, and leaves a clone with the matching costume for each one above the board. The Cover hides them until the game ends.' }),
+        defineProcedure('pick code', { comment: 'Picks four random colours, repeats allowed, into the ‘code’ list, and leaves a clone with the matching costume for each one above the board. The Cover hides them until the game ends.', y: 355, commentX: 441 }),
         block('data_deletealloflist', { fields: { LIST: CODE_LIST } }),
         block('motion_gotoxy', { inputs: { X: number(-64), Y: number(164) } }),
         block('control_repeat', {
@@ -42,7 +42,7 @@ export function pegSprite() {
         })
       ],
       [
-        block('control_start_as_clone'),
+        block('control_start_as_clone', { y: 905 }),
         block('data_setvariableto', { inputs: { VALUE: text(1) }, fields: { VARIABLE: IS_CLONE_VARIABLE } }),
         block('looks_show')
       ]

@@ -11,7 +11,7 @@ export function checkSprite() {
     },
     ...buildScripts(
       [
-        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST }, comment: 'Shows Check only while a full guess is placed and no confirmation is open, and runs the hover and press cue.' }),
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST }, comment: 'Shows Check only while a full guess is placed and no confirmation is open, and runs the hover and press cue.', y: 0, commentX: 735 }),
         block('motion_gotoxy', { inputs: { X: number(160), Y: number(-160) } }),
         block('control_forever', {
           substack: [
@@ -36,15 +36,15 @@ export function checkSprite() {
         })
       ],
       [
-        block('event_whenthisspriteclicked'),
+        block('event_whenthisspriteclicked', { y: 861 }),
         callProcedure('submit guess', { warp: false })
       ],
       [
-        whenKeyPressed('enter'),
+        whenKeyPressed('enter', { y: 1990 }),
         callProcedure('submit guess', { warp: false })
       ],
       [
-        defineProcedure('submit guess', { warp: false, comment: 'Waits for scoring, then either ends the game (four black pegs, or the tenth row) or moves to the next row. Runs with screen refresh, because a custom block that waits would stall otherwise.' }),
+        defineProcedure('submit guess', { warp: false, comment: 'Waits for scoring, then either ends the game (four black pegs, or the tenth row) or moves to the next row. Runs with screen refresh, because a custom block that waits would stall otherwise.', y: 1030, commentX: 735 }),
         block('control_if', {
           inputs: {
             CONDITION: condition(block('operator_and', {

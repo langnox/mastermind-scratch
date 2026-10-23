@@ -11,7 +11,7 @@ export function undoSprite() {
     },
     ...buildScripts(
       [
-        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST } }),
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST }, y: 0 }),
         block('motion_gotoxy', { inputs: { X: number(160), Y: number(-128) } }),
         block('control_forever', {
           substack: [
@@ -36,15 +36,15 @@ export function undoSprite() {
         })
       ],
       [
-        block('event_whenthisspriteclicked'),
+        block('event_whenthisspriteclicked', { y: 861 }),
         callProcedure('undo peg')
       ],
       [
-        whenKeyPressed('left arrow'),
+        whenKeyPressed('left arrow', { y: 1456 }),
         callProcedure('undo peg')
       ],
       [
-        defineProcedure('undo peg', { comment: 'Checks there is a peg first, because the left arrow works even while the button is hidden.' }),
+        defineProcedure('undo peg', { comment: 'Checks there is a peg first, because the left arrow works even while the button is hidden.', y: 1030, commentX: 735 }),
         block('control_if', {
           inputs: {
             CONDITION: condition(block('operator_and', {

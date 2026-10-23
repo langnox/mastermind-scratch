@@ -11,21 +11,21 @@ export function noSprite() {
     },
     ...buildScripts(
       [
-        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST } }),
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST }, y: 0 }),
         block('looks_hide'),
         block('motion_gotoxy', { inputs: { X: number(191), Y: number(-68) } }),
         block('control_forever', { substack: [sizeCue(NO_PRESSED_AT)] })
       ],
       [
-        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: CONFIRM_NEW_GAME_BROADCAST } }),
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: CONFIRM_NEW_GAME_BROADCAST }, y: 900 }),
         block('looks_show')
       ],
       [
-        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: CANCEL_NEW_GAME_BROADCAST } }),
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: CANCEL_NEW_GAME_BROADCAST }, y: 1071 }),
         block('looks_hide')
       ],
       [
-        block('event_whenthisspriteclicked'),
+        block('event_whenthisspriteclicked', { y: 683 }),
         markPressed(NO_PRESSED_AT),
         block('event_broadcast', { inputs: { BROADCAST_INPUT: message(CANCEL_NEW_GAME_BROADCAST) } })
       ]

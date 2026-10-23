@@ -11,13 +11,13 @@ export function holeSprite() {
     },
     ...buildScripts(
       [
-        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST } }),
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST }, y: 0 }),
         deleteIfClone(IS_CLONE_VARIABLE),
         block('looks_hide'),
         callProcedure('draw board')
       ],
       [
-        defineProcedure('draw board', { comment: 'Walks the board row by row, leaving a clone at each hole: four large code holes, then a 2×2 group of small feedback holes. Runs without screen refresh, so the whole board appears at once.' }),
+        defineProcedure('draw board', { comment: 'Walks the board row by row, leaving a clone at each hole: four large code holes, then a 2×2 group of small feedback holes. Runs without screen refresh, so the whole board appears at once.', y: 355, commentX: 343 }),
         block('motion_gotoxy', { inputs: { X: number(-64), Y: number(128) } }),
         block('control_repeat', {
           inputs: { TIMES: number(10) },
@@ -53,7 +53,7 @@ export function holeSprite() {
         })
       ],
       [
-        block('control_start_as_clone'),
+        block('control_start_as_clone', { y: 1431 }),
         block('data_setvariableto', { inputs: { VALUE: text(1) }, fields: { VARIABLE: IS_CLONE_VARIABLE } }),
         block('looks_show')
       ]

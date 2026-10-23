@@ -6,20 +6,20 @@ export function markerSprite() {
     isStage: false, name: 'Marker', variables: {}, lists: {}, broadcasts: {},
     ...buildScripts(
       [
-        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST } }),
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST }, y: 0 }),
         block('motion_gotoxy', { inputs: { X: number(-92), Y: number(-160) } }),
         block('looks_show')
       ],
       [
-        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEXT_ROW_BROADCAST } }),
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEXT_ROW_BROADCAST }, y: 219 }),
         block('motion_sety', { inputs: { Y: number(rowY()) } })
       ],
       [
-        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: WIN_BROADCAST } }),
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: WIN_BROADCAST }, y: 406 }),
         block('looks_hide')
       ],
       [
-        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: LOSE_BROADCAST } }),
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: LOSE_BROADCAST }, y: 577 }),
         block('looks_hide')
       ]
     ),

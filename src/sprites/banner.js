@@ -11,27 +11,27 @@ export function bannerSprite() {
     isStage: false, name: 'Banner', variables: {}, lists: {}, broadcasts: {},
     ...buildScripts(
       [
-        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST } }),
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST }, y: 0 }),
         block('looks_hide'),
         block('motion_gotoxy', { inputs: { X: number(165), Y: number(0) } })
       ],
       [
-        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: WIN_BROADCAST } }),
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: WIN_BROADCAST }, y: 219 }),
         block('looks_switchcostumeto', { inputs: { COSTUME: costume('win') } }),
         block('looks_show')
       ],
       [
-        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: LOSE_BROADCAST } }),
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: LOSE_BROADCAST }, y: 438 }),
         block('looks_switchcostumeto', { inputs: { COSTUME: costume('lose') } }),
         block('looks_show')
       ],
       [
-        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: CONFIRM_NEW_GAME_BROADCAST } }),
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: CONFIRM_NEW_GAME_BROADCAST }, y: 657 }),
         block('looks_switchcostumeto', { inputs: { COSTUME: costume('confirm') } }),
         block('looks_show')
       ],
       [
-        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: CANCEL_NEW_GAME_BROADCAST } }),
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: CANCEL_NEW_GAME_BROADCAST }, y: 876 }),
         block('looks_hide')
       ]
     ),

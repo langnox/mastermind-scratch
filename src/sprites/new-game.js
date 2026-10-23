@@ -11,21 +11,21 @@ export function newGameSprite() {
     },
     ...buildScripts(
       [
-        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST } }),
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST }, y: 0 }),
         block('motion_gotoxy', { inputs: { X: number(165), Y: number(-36) } }),
         block('looks_show'),
         block('control_forever', { substack: [sizeCue(NEW_GAME_PRESSED_AT)] })
       ],
       [
-        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: CONFIRM_NEW_GAME_BROADCAST } }),
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: CONFIRM_NEW_GAME_BROADCAST }, y: 1086 }),
         block('looks_hide')
       ],
       [
-        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: CANCEL_NEW_GAME_BROADCAST } }),
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: CANCEL_NEW_GAME_BROADCAST }, y: 1257 }),
         block('looks_show')
       ],
       [
-        block('event_whenthisspriteclicked', { comment: 'Asks first only if a game is in progress with something to lose. Otherwise it starts a new game straight away.' }),
+        block('event_whenthisspriteclicked', { comment: 'Asks first only if a game is in progress with something to lose. Otherwise it starts a new game straight away.', y: 683, commentX: 911 }),
         markPressed(NEW_GAME_PRESSED_AT),
         block('control_if_else', {
           inputs: {

@@ -23,12 +23,12 @@ export function guessSprite() {
     },
     ...buildScripts(
       [
-        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST } }),
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST }, y: 0 }),
         deleteIfClone(IS_CLONE_VARIABLE),
         block('looks_hide')
       ],
       [
-        block('control_start_as_clone', { comment: 'Takes the next slot from the ‘placed’ counter rather than from the guess length, so pegs entered in the same frame still land in separate holes. It remembers its slot and row for undo.' }),
+        block('control_start_as_clone', { comment: 'Takes the next slot from the ‘placed’ counter rather than from the guess length, so pegs entered in the same frame still land in separate holes. It remembers its slot and row for undo.', y: 307, commentX: 764 }),
         block('data_setvariableto', { inputs: { VALUE: text(1) }, fields: { VARIABLE: IS_CLONE_VARIABLE } }),
         block('data_changevariableby', { inputs: { VALUE: number(1) }, fields: { VARIABLE: PLACED_VARIABLE } }),
         block('data_setvariableto', { inputs: { VALUE: text(variable(PLACED_VARIABLE)) }, fields: { VARIABLE: MY_INDEX_VARIABLE } }),
@@ -45,7 +45,7 @@ export function guessSprite() {
         block('looks_show')
       ],
       [
-        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: UNDO_BROADCAST }, comment: 'Only the peg beyond the end of the shortened guess, in the current row, deletes itself.' }),
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: UNDO_BROADCAST }, comment: 'Only the peg beyond the end of the shortened guess, in the current row, deletes itself.', y: 792, commentX: 764 }),
         block('control_if', {
           inputs: {
             CONDITION: condition(block('operator_and', {
