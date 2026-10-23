@@ -1,9 +1,13 @@
 export function number(value) {
-  return [1, [4, String(value)]];
+  return value.opcode ? [3, value, [4, '']] : [1, [4, String(value)]];
+}
+
+export function text(value) {
+  return value.opcode ? [3, value, [10, '']] : [1, [10, String(value)]];
 }
 
 export function color(value) {
-  return [1, [9, value]];
+  return value.opcode ? [3, value, [9, '#000000']] : [1, [9, value]];
 }
 
 export function block(opcode, { inputs = {}, fields = {}, substack } = {}) {
@@ -19,7 +23,10 @@ export function buildBlocks(...scripts) {
     let previousId = null;
     for (const { opcode, inputs, fields, substack } of stack) {
       const id = String(nextId++);
-      blocks[id] = { opcode, next: null, parent: previousId ?? parentId, inputs: { ...inputs }, fields, shadow: false, topLevel: false };
+      blocks[id] = { opcode, next: null, parent: previousId ?? parentId, inputs: {}, fields, shadow: false, topLevel: false };
+      for (const [name, value] of Object.entries(inputs)) {
+        blocks[id].inputs[name] = value[0] === 3 ? [3, addStack([value[1]], id), value[2]] : value;
+      }
       if (substack) {
         blocks[id].inputs.SUBSTACK = [2, addStack(substack, id)];
       }
