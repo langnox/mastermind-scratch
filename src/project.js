@@ -7,6 +7,7 @@ import { guessSprite } from './sprites/guess.js';
 import { checkSprite } from './sprites/check.js';
 import { undoSprite } from './sprites/undo.js';
 import { feedbackSprite } from './sprites/feedback.js';
+import { bannerSprite } from './sprites/banner.js';
 
 export const PROJECT = {
   targets: [
@@ -18,7 +19,8 @@ export const PROJECT = {
     guessSprite(),
     checkSprite(),
     undoSprite(),
-    feedbackSprite()
+    feedbackSprite(),
+    bannerSprite()
   ],
   monitors: [], extensions: [],
   meta: { semver: '3.0.0', vm: '0.2.0', agent: '' }

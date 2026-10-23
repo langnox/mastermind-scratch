@@ -1,5 +1,5 @@
-import { number, text, condition, costume, cloneOf, defineProcedure, callProcedure, block, buildBlocks } from '../blocks.js';
-import { GUESS_LIST, guessLength, row, pegCostumes } from '../shared.js';
+import { number, text, variable, condition, costume, cloneOf, defineProcedure, callProcedure, block, buildBlocks } from '../blocks.js';
+import { GUESS_LIST, PLAYING_VARIABLE, guessLength, row, pegCostumes } from '../shared.js';
 
 export function paletteSprite() {
   return {
@@ -33,8 +33,13 @@ export function paletteSprite() {
           inputs: {
             CONDITION: condition(block('operator_and', {
               inputs: {
-                OPERAND1: condition(block('operator_lt', { inputs: { OPERAND1: text(guessLength()), OPERAND2: text(4) } })),
-                OPERAND2: condition(block('operator_lt', { inputs: { OPERAND1: text(row()), OPERAND2: text(11) } }))
+                OPERAND1: condition(block('operator_and', {
+                  inputs: {
+                    OPERAND1: condition(block('operator_lt', { inputs: { OPERAND1: text(guessLength()), OPERAND2: text(4) } })),
+                    OPERAND2: condition(block('operator_lt', { inputs: { OPERAND1: text(row()), OPERAND2: text(11) } }))
+                  }
+                })),
+                OPERAND2: condition(block('operator_equals', { inputs: { OPERAND1: text(variable(PLAYING_VARIABLE)), OPERAND2: text(1) } }))
               }
             }))
           },

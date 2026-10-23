@@ -1,5 +1,5 @@
 import { number, text, condition, block, buildBlocks, svgCostume } from '../blocks.js';
-import { NEXT_ROW_BROADCAST, row, rowY } from '../shared.js';
+import { NEXT_ROW_BROADCAST, WIN_BROADCAST, row, rowY } from '../shared.js';
 
 export function markerSprite() {
   return {
@@ -21,6 +21,10 @@ export function markerSprite() {
             block('looks_hide')
           ]
         })
+      ],
+      [
+        block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: WIN_BROADCAST } }),
+        block('looks_hide')
       ]
     ),
     currentCostume: 0,
