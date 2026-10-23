@@ -1,5 +1,5 @@
 import { number, text, condition, costume, cloneOf, defineProcedure, callProcedure, block, buildBlocks } from '../blocks.js';
-import { GUESS_LIST, guessLength, pegCostumes } from '../shared.js';
+import { GUESS_LIST, guessLength, row, pegCostumes } from '../shared.js';
 
 export function paletteSprite() {
   return {
@@ -30,7 +30,14 @@ export function paletteSprite() {
       [
         block('event_whenthisspriteclicked'),
         block('control_if', {
-          inputs: { CONDITION: condition(block('operator_lt', { inputs: { OPERAND1: text(guessLength()), OPERAND2: text(4) } })) },
+          inputs: {
+            CONDITION: condition(block('operator_and', {
+              inputs: {
+                OPERAND1: condition(block('operator_lt', { inputs: { OPERAND1: text(guessLength()), OPERAND2: text(4) } })),
+                OPERAND2: condition(block('operator_lt', { inputs: { OPERAND1: text(row()), OPERAND2: text(11) } }))
+              }
+            }))
+          },
           substack: [
             block('data_addtolist', {
               inputs: { ITEM: text(block('looks_costumenumbername', { fields: { NUMBER_NAME: ['number', null] } })) },

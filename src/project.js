@@ -4,6 +4,7 @@ import { pegSprite } from './sprites/peg.js';
 import { paletteSprite } from './sprites/palette.js';
 import { markerSprite } from './sprites/marker.js';
 import { guessSprite } from './sprites/guess.js';
+import { checkSprite } from './sprites/check.js';
 
 export const PROJECT = {
   targets: [
@@ -12,7 +13,8 @@ export const PROJECT = {
     pegSprite(),
     paletteSprite(),
     markerSprite(),
-    guessSprite()
+    guessSprite(),
+    checkSprite()
   ],
   monitors: [], extensions: [],
   meta: { semver: '3.0.0', vm: '0.2.0', agent: '' }
