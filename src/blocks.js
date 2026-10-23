@@ -15,8 +15,18 @@ export function cloneOf(target) {
   return [1, block('control_create_clone_of_menu', { fields: { CLONE_OPTION: [target, null] }, shadow: true })];
 }
 
-export function block(opcode, { inputs = {}, fields = {}, substack, shadow = false } = {}) {
-  return { opcode, inputs, fields, substack, shadow };
+export function defineProcedure(proccode) {
+  const mutation = { tagName: 'mutation', children: [], proccode, argumentids: '[]', argumentnames: '[]', argumentdefaults: '[]', warp: 'true' };
+  return block('procedures_definition', { inputs: { custom_block: [1, block('procedures_prototype', { shadow: true, mutation })] } });
+}
+
+export function callProcedure(proccode) {
+  const mutation = { tagName: 'mutation', children: [], proccode, argumentids: '[]', warp: 'true' };
+  return block('procedures_call', { mutation });
+}
+
+export function block(opcode, { inputs = {}, fields = {}, substack, shadow = false, mutation } = {}) {
+  return { opcode, inputs, fields, substack, shadow, mutation };
 }
 
 export function buildBlocks(...scripts) {
@@ -26,9 +36,9 @@ export function buildBlocks(...scripts) {
   function addStack(stack, parentId) {
     let firstId = null;
     let previousId = null;
-    for (const { opcode, inputs, fields, substack, shadow } of stack) {
+    for (const { opcode, inputs, fields, substack, shadow, mutation } of stack) {
       const id = String(nextId++);
-      blocks[id] = { opcode, next: null, parent: previousId ?? parentId, inputs: {}, fields, shadow, topLevel: false };
+      blocks[id] = { opcode, next: null, parent: previousId ?? parentId, inputs: {}, fields, shadow, topLevel: false, mutation };
       for (const [name, [type, ...parts]] of Object.entries(inputs)) {
         blocks[id].inputs[name] = [type, ...parts.map(part => part.opcode ? addStack([part], id) : part)];
       }
