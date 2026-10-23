@@ -1,14 +1,20 @@
 import { number, text, variable, message, condition, block, buildBlocks } from '../blocks.js';
-import { NEW_GAME_BROADCAST, CONFIRM_NEW_GAME_BROADCAST, CANCEL_NEW_GAME_BROADCAST, PLAYING_VARIABLE, guessLength, row, buttonCostume } from '../shared.js';
+import { NEW_GAME_BROADCAST, CONFIRM_NEW_GAME_BROADCAST, CANCEL_NEW_GAME_BROADCAST, PLAYING_VARIABLE, guessLength, row, pressedAtVariable, markPressed, sizeCue, buttonCostume } from '../shared.js';
 
 export function newGameSprite() {
+  const NEW_GAME_PRESSED_AT = pressedAtVariable('new-game');
+
   return {
-    isStage: false, name: 'New game', variables: {}, lists: {}, broadcasts: {}, comments: {},
+    isStage: false, name: 'New game', lists: {}, broadcasts: {}, comments: {},
+    variables: {
+      [NEW_GAME_PRESSED_AT[1]]: [NEW_GAME_PRESSED_AT[0], 0]
+    },
     blocks: buildBlocks(
       [
         block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST } }),
         block('motion_gotoxy', { inputs: { X: number(165), Y: number(-36) } }),
-        block('looks_show')
+        block('looks_show'),
+        block('control_forever', { substack: [sizeCue(NEW_GAME_PRESSED_AT)] })
       ],
       [
         block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: CONFIRM_NEW_GAME_BROADCAST } }),
@@ -20,6 +26,7 @@ export function newGameSprite() {
       ],
       [
         block('event_whenthisspriteclicked'),
+        markPressed(NEW_GAME_PRESSED_AT),
         block('control_if_else', {
           inputs: {
             CONDITION: condition(block('operator_and', {

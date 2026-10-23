@@ -1,9 +1,14 @@
 import { number, text, variable, message, condition, defineProcedure, callProcedure, whenKeyPressed, block, buildBlocks } from '../blocks.js';
-import { GUESS_LIST, ROW_VARIABLE, NEXT_ROW_BROADCAST, NEW_GAME_BROADCAST, SCORE_BROADCAST, WIN_BROADCAST, LOSE_BROADCAST, PLAYING_VARIABLE, PLACED_VARIABLE, BLACK_VARIABLE, guessLength, row, notConfirming, buttonCostume } from '../shared.js';
+import { GUESS_LIST, ROW_VARIABLE, NEXT_ROW_BROADCAST, NEW_GAME_BROADCAST, SCORE_BROADCAST, WIN_BROADCAST, LOSE_BROADCAST, PLAYING_VARIABLE, PLACED_VARIABLE, BLACK_VARIABLE, guessLength, row, notConfirming, pressedAtVariable, markPressed, sizeCue, buttonCostume } from '../shared.js';
 
 export function checkSprite() {
+  const CHECK_PRESSED_AT = pressedAtVariable('check');
+
   return {
-    isStage: false, name: 'Check', variables: {}, lists: {}, broadcasts: {}, comments: {},
+    isStage: false, name: 'Check', lists: {}, broadcasts: {}, comments: {},
+    variables: {
+      [CHECK_PRESSED_AT[1]]: [CHECK_PRESSED_AT[0], 0]
+    },
     blocks: buildBlocks(
       [
         block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST } }),
@@ -25,7 +30,8 @@ export function checkSprite() {
               substack2: [
                 block('looks_hide')
               ]
-            })
+            }),
+            sizeCue(CHECK_PRESSED_AT)
           ]
         })
       ],
@@ -49,6 +55,7 @@ export function checkSprite() {
             }))
           },
           substack: [
+            markPressed(CHECK_PRESSED_AT),
             block('event_broadcastandwait', { inputs: { BROADCAST_INPUT: message(SCORE_BROADCAST) } }),
             block('data_deletealloflist', { fields: { LIST: GUESS_LIST } }),
             block('data_setvariableto', { inputs: { VALUE: text(0) }, fields: { VARIABLE: PLACED_VARIABLE } }),

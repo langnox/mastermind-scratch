@@ -1,9 +1,14 @@
 import { number, text, message, condition, defineProcedure, callProcedure, whenKeyPressed, block, buildBlocks } from '../blocks.js';
-import { GUESS_LIST, UNDO_BROADCAST, NEW_GAME_BROADCAST, PLACED_VARIABLE, guessLength, notConfirming, buttonCostume } from '../shared.js';
+import { GUESS_LIST, UNDO_BROADCAST, NEW_GAME_BROADCAST, PLACED_VARIABLE, guessLength, notConfirming, pressedAtVariable, markPressed, sizeCue, buttonCostume } from '../shared.js';
 
 export function undoSprite() {
+  const UNDO_PRESSED_AT = pressedAtVariable('undo');
+
   return {
-    isStage: false, name: 'Undo', variables: {}, lists: {}, broadcasts: {}, comments: {},
+    isStage: false, name: 'Undo', lists: {}, broadcasts: {}, comments: {},
+    variables: {
+      [UNDO_PRESSED_AT[1]]: [UNDO_PRESSED_AT[0], 0]
+    },
     blocks: buildBlocks(
       [
         block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST } }),
@@ -25,7 +30,8 @@ export function undoSprite() {
               substack2: [
                 block('looks_hide')
               ]
-            })
+            }),
+            sizeCue(UNDO_PRESSED_AT)
           ]
         })
       ],
@@ -49,6 +55,7 @@ export function undoSprite() {
             }))
           },
           substack: [
+            markPressed(UNDO_PRESSED_AT),
             block('data_deleteoflist', { inputs: { INDEX: number(guessLength()) }, fields: { LIST: GUESS_LIST } }),
             block('data_changevariableby', { inputs: { VALUE: number(-1) }, fields: { VARIABLE: PLACED_VARIABLE } }),
             block('event_broadcast', { inputs: { BROADCAST_INPUT: message(UNDO_BROADCAST) } })
