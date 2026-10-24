@@ -1,0 +1,15 @@
+{
+  "name": "Mastermind in Scratch",
+  "short_name": "Mastermind",
+  "description": "A Mastermind game built as a Scratch project in JavaScript. Play it in the browser or download it for online Scratch.",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#f4f1ea",
+  "theme_color": "#f4f1ea",
+  "icons": [
+    { "src": "icon.svg", "type": "image/svg+xml", "sizes": "any" },
+    { "src": "icon-192.png", "type": "image/png", "sizes": "192x192" },
+    { "src": "icon-512.png", "type": "image/png", "sizes": "512x512" }
+  ]
+}
