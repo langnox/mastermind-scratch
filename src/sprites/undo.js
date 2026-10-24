@@ -13,7 +13,7 @@ export function undoSprite() {
       [
         block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST }, y: 0 }),
         forgetPressed(UNDO_PRESSED_AT),
-        block('motion_gotoxy', { inputs: { X: number(160), Y: number(-128) } }),
+        block('motion_gotoxy', { inputs: { X: number(160), Y: number(-98) } }),
         block('control_forever', {
           substack: [
             block('control_if_else', {

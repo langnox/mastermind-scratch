@@ -14,7 +14,7 @@ export function yesSprite() {
         block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST }, y: 0 }),
         forgetPressed(YES_PRESSED_AT),
         block('looks_hide'),
-        block('motion_gotoxy', { inputs: { X: number(139), Y: number(-68) } }),
+        block('motion_gotoxy', { inputs: { X: number(125), Y: number(-46) } }),
         block('control_forever', { substack: [sizeCue(YES_PRESSED_AT)] })
       ],
       [
@@ -33,7 +33,7 @@ export function yesSprite() {
     ),
     currentCostume: 0,
     costumes: [
-      buttonCostume('Yes', 48)
+      buttonCostume('Yes', 66)
     ],
     sounds: [], volume: 100, layerOrder: 11, visible: false, x: 0, y: 0, size: 100, direction: 90, draggable: false, rotationStyle: 'all around'
   };

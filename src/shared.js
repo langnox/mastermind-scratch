@@ -77,9 +77,9 @@ export function rowY() {
   return block('operator_add', { inputs: { NUM1: number(-192), NUM2: number(block('operator_multiply', { inputs: { NUM1: number(32), NUM2: number(row()) } })) } });
 }
 
-export function buttonCostume(label, width = 64) {
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="26">${roundedRect(width, 26, 6, '#5f5e5a')}${centredText(label, width / 2, 18, 14, '#ffffff')}</svg>`;
-  return svgCostume('button', svg, width / 2, 13);
+export function buttonCostume(label, width = 140) {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="44">${roundedRect(width, 44, 8, '#5f5e5a')}${centredText(label, width / 2, 29, 20, '#ffffff')}</svg>`;
+  return svgCostume('button', svg, width / 2, 22);
 }
 
 export const PEG_COLOURS = [

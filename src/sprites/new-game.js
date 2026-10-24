@@ -13,7 +13,7 @@ export function newGameSprite() {
       [
         block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST }, y: 0 }),
         forgetPressed(NEW_GAME_PRESSED_AT),
-        block('motion_gotoxy', { inputs: { X: number(165), Y: number(-36) } }),
+        block('motion_gotoxy', { inputs: { X: number(160), Y: number(6) } }),
         block('looks_show'),
         block('control_forever', { substack: [sizeCue(NEW_GAME_PRESSED_AT)] })
       ],
@@ -53,7 +53,7 @@ export function newGameSprite() {
     ),
     currentCostume: 0,
     costumes: [
-      buttonCostume('New game', 90)
+      buttonCostume('New game')
     ],
     sounds: [], volume: 100, layerOrder: 10, visible: false, x: 0, y: 0, size: 100, direction: 90, draggable: false, rotationStyle: 'all around'
   };

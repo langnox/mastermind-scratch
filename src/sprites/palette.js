@@ -7,8 +7,8 @@ export function paletteSprite() {
 
   function paletteCostumes() {
     return PEG_COLOURS.map(({ name, fill }) => {
-      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="44" height="22">${centredText(name[0].toUpperCase(), 6, 16, 14, '#5f5e5a')}<circle cx="33" cy="11" r="11" fill="${fill}"/></svg>`;
-      return svgCostume(name, svg, 33, 11);
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="80" height="40">${centredText(name[0].toUpperCase(), 12, 27, 20, '#5f5e5a')}<circle cx="60" cy="20" r="20" fill="${fill}"/></svg>`;
+      return svgCostume(name, svg, 60, 20);
     });
   }
 
@@ -28,14 +28,14 @@ export function paletteSprite() {
       ],
       [
         defineProcedure('show palette', { y: 405 }),
-        block('motion_gotoxy', { inputs: { X: number(-150), Y: number(80) } }),
+        block('motion_gotoxy', { inputs: { X: number(-125), Y: number(125) } }),
         block('looks_switchcostumeto', { inputs: { COSTUME: costume('red') } }),
         block('control_repeat', {
           inputs: { TIMES: number(6) },
           substack: [
             block('control_create_clone_of', { inputs: { CLONE_OPTION: cloneOf('_myself_') } }),
             block('looks_nextcostume'),
-            block('motion_changeyby', { inputs: { DY: number(-32) } })
+            block('motion_changeyby', { inputs: { DY: number(-50) } })
           ]
         })
       ],

@@ -13,7 +13,7 @@ export function checkSprite() {
       [
         block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST }, comment: 'Shows Check only while a full guess is placed and no confirmation is open, and runs the hover and press cue.', y: 0, commentX: 735 }),
         forgetPressed(CHECK_PRESSED_AT),
-        block('motion_gotoxy', { inputs: { X: number(160), Y: number(-160) } }),
+        block('motion_gotoxy', { inputs: { X: number(160), Y: number(-150) } }),
         block('control_forever', {
           substack: [
             block('control_if_else', {

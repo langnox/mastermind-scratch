@@ -13,7 +13,7 @@ export function bannerSprite() {
       [
         block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: NEW_GAME_BROADCAST }, y: 0 }),
         block('looks_hide'),
-        block('motion_gotoxy', { inputs: { X: number(165), Y: number(0) } })
+        block('motion_gotoxy', { inputs: { X: number(160), Y: number(58) } })
       ],
       [
         block('event_whenbroadcastreceived', { fields: { BROADCAST_OPTION: WIN_BROADCAST }, y: 219 }),
