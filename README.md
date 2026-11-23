@@ -4,7 +4,9 @@ A Mastermind game built as a Scratch project in JavaScript. It plays in the brow
 
 ## Online version
 
-The latest version is published at https://langnox.github.io/mastermind-scratch/.
+The GitHub Pages site at https://langnox.github.io/mastermind-scratch/ is the generator. It builds and runs the Scratch project in your browser, and lets you download the `.sb3` file.
+
+The same project is on Scratch at https://scratch.mit.edu/projects/1443375960/. It is the `.sb3` file from the latest GitHub release, uploaded to online Scratch.
 
 ## Getting the code onto your machine
 
